@@ -8,20 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		7E0BA37D21E584810067D792 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA37C21E584810067D792 /* AppDelegate.swift */; };
-		7E0BA37F21E584810067D792 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA37E21E584810067D792 /* ViewController.swift */; };
+		7E0BA37F21E584810067D792 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA37E21E584810067D792 /* HomeViewController.swift */; };
 		7E0BA38221E584810067D792 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0BA38021E584810067D792 /* Main.storyboard */; };
 		7E0BA38421E584840067D792 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E0BA38321E584840067D792 /* Assets.xcassets */; };
 		7E0BA38721E584840067D792 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0BA38521E584840067D792 /* LaunchScreen.storyboard */; };
+		7E0BA39021E58D700067D792 /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA38F21E58D700067D792 /* Extensions+UIView.swift */; };
+		7E0BA39321E597C40067D792 /* BottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39221E597C40067D792 /* BottomControlsStackView.swift */; };
+		7E0BA39521E59BDF0067D792 /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39421E59BDF0067D792 /* TopNavigationStackView.swift */; };
+		7E0BA39821E5A5200067D792 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39721E5A5200067D792 /* CardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7E0BA37921E584810067D792 /* YSTinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YSTinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E0BA37C21E584810067D792 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7E0BA37E21E584810067D792 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7E0BA37E21E584810067D792 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7E0BA38121E584810067D792 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7E0BA38321E584840067D792 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7E0BA38621E584840067D792 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7E0BA38821E584840067D792 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7E0BA38F21E58D700067D792 /* Extensions+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
+		7E0BA39221E597C40067D792 /* BottomControlsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomControlsStackView.swift; sourceTree = "<group>"; };
+		7E0BA39421E59BDF0067D792 /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
+		7E0BA39721E5A5200067D792 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +62,42 @@
 		7E0BA37B21E584810067D792 /* YSTinder */ = {
 			isa = PBXGroup;
 			children = (
+				7E0BA39621E59C270067D792 /* Home */,
+				7E0BA38E21E58D330067D792 /* Extensions */,
 				7E0BA37C21E584810067D792 /* AppDelegate.swift */,
-				7E0BA37E21E584810067D792 /* ViewController.swift */,
 				7E0BA38021E584810067D792 /* Main.storyboard */,
 				7E0BA38321E584840067D792 /* Assets.xcassets */,
 				7E0BA38521E584840067D792 /* LaunchScreen.storyboard */,
 				7E0BA38821E584840067D792 /* Info.plist */,
 			);
 			path = YSTinder;
+			sourceTree = "<group>";
+		};
+		7E0BA38E21E58D330067D792 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7E0BA38F21E58D700067D792 /* Extensions+UIView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7E0BA39121E5979C0067D792 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7E0BA39221E597C40067D792 /* BottomControlsStackView.swift */,
+				7E0BA39421E59BDF0067D792 /* TopNavigationStackView.swift */,
+				7E0BA39721E5A5200067D792 /* CardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7E0BA39621E59C270067D792 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7E0BA37E21E584810067D792 /* HomeViewController.swift */,
+				7E0BA39121E5979C0067D792 /* Views */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +171,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E0BA37F21E584810067D792 /* ViewController.swift in Sources */,
+				7E0BA37F21E584810067D792 /* HomeViewController.swift in Sources */,
+				7E0BA39321E597C40067D792 /* BottomControlsStackView.swift in Sources */,
 				7E0BA37D21E584810067D792 /* AppDelegate.swift in Sources */,
+				7E0BA39021E58D700067D792 /* Extensions+UIView.swift in Sources */,
+				7E0BA39821E5A5200067D792 /* CardView.swift in Sources */,
+				7E0BA39521E59BDF0067D792 /* TopNavigationStackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +325,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BD4MBSH943;
 				INFOPLIST_FILE = YSTinder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -292,7 +333,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = liurenrui.YSTinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -303,6 +344,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BD4MBSH943;
 				INFOPLIST_FILE = YSTinder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -310,7 +352,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = liurenrui.YSTinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
