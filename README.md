@@ -4,4 +4,4 @@
 ![](https://img.shields.io/badge/language-swift4.2-brightgreen.svg)
 
 # LICENSE
-YSTinder is licensed under [MIT](https://github.com/RenruiLiu/YuisoPodcasts/blob/master/LICENSE)
+YSTinder is licensed under [MIT](https://github.com/RenruiLiu/YSTinder/blob/master/LICENSE)
