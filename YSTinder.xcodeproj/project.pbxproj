@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E0BA37D21E584810067D792 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA37C21E584810067D792 /* AppDelegate.swift */; };
-		7E0BA37F21E584810067D792 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA37E21E584810067D792 /* HomeViewController.swift */; };
+		7E0BA37F21E584810067D792 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA37E21E584810067D792 /* HomeController.swift */; };
 		7E0BA38221E584810067D792 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0BA38021E584810067D792 /* Main.storyboard */; };
 		7E0BA38421E584840067D792 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E0BA38321E584840067D792 /* Assets.xcassets */; };
 		7E0BA38721E584840067D792 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E0BA38521E584840067D792 /* LaunchScreen.storyboard */; };
@@ -16,12 +16,15 @@
 		7E0BA39321E597C40067D792 /* BottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39221E597C40067D792 /* BottomControlsStackView.swift */; };
 		7E0BA39521E59BDF0067D792 /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39421E59BDF0067D792 /* TopNavigationStackView.swift */; };
 		7E0BA39821E5A5200067D792 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39721E5A5200067D792 /* CardView.swift */; };
+		7E0BA39B21E5DADF0067D792 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39A21E5DADF0067D792 /* User.swift */; };
+		7E0BA39E21E5E6370067D792 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39D21E5E6370067D792 /* CardViewModel.swift */; };
+		7E0BA3A021E5F80C0067D792 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39F21E5F80C0067D792 /* Advertiser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7E0BA37921E584810067D792 /* YSTinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YSTinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E0BA37C21E584810067D792 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7E0BA37E21E584810067D792 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		7E0BA37E21E584810067D792 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7E0BA38121E584810067D792 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7E0BA38321E584840067D792 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7E0BA38621E584840067D792 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -30,6 +33,9 @@
 		7E0BA39221E597C40067D792 /* BottomControlsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomControlsStackView.swift; sourceTree = "<group>"; };
 		7E0BA39421E59BDF0067D792 /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 		7E0BA39721E5A5200067D792 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		7E0BA39A21E5DADF0067D792 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7E0BA39D21E5E6370067D792 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		7E0BA39F21E5F80C0067D792 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +68,7 @@
 		7E0BA37B21E584810067D792 /* YSTinder */ = {
 			isa = PBXGroup;
 			children = (
+				7E0BA39921E5DAD20067D792 /* Model */,
 				7E0BA39621E59C270067D792 /* Home */,
 				7E0BA38E21E58D330067D792 /* Extensions */,
 				7E0BA37C21E584810067D792 /* AppDelegate.swift */,
@@ -94,10 +101,20 @@
 		7E0BA39621E59C270067D792 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				7E0BA37E21E584810067D792 /* HomeViewController.swift */,
+				7E0BA39D21E5E6370067D792 /* CardViewModel.swift */,
+				7E0BA37E21E584810067D792 /* HomeController.swift */,
 				7E0BA39121E5979C0067D792 /* Views */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		7E0BA39921E5DAD20067D792 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7E0BA39A21E5DADF0067D792 /* User.swift */,
+				7E0BA39F21E5F80C0067D792 /* Advertiser.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,12 +188,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E0BA37F21E584810067D792 /* HomeViewController.swift in Sources */,
+				7E0BA37F21E584810067D792 /* HomeController.swift in Sources */,
 				7E0BA39321E597C40067D792 /* BottomControlsStackView.swift in Sources */,
+				7E0BA3A021E5F80C0067D792 /* Advertiser.swift in Sources */,
 				7E0BA37D21E584810067D792 /* AppDelegate.swift in Sources */,
 				7E0BA39021E58D700067D792 /* Extensions+UIView.swift in Sources */,
+				7E0BA39E21E5E6370067D792 /* CardViewModel.swift in Sources */,
 				7E0BA39821E5A5200067D792 /* CardView.swift in Sources */,
 				7E0BA39521E59BDF0067D792 /* TopNavigationStackView.swift in Sources */,
+				7E0BA39B21E5DADF0067D792 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

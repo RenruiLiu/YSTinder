@@ -1,5 +1,5 @@
 //
-//  HomeBottomControlsStackView.swift
+//  BottomControlsStackView.swift
 //  YSTinder
 //
 //  Created by jozen on 2019/1/9.
