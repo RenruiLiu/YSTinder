@@ -13,8 +13,9 @@ struct User: ProducesCardViewModel {
     let name: String
     let age: Int
     let profession: String
-    let imageName: String
+    let imageNames: [String]
     let city: String
+    let caption: String
     
     //将一个User中需要展示到View的内容都转成一个ViewModel
     func toCardViewModel() -> CardViewModel{
@@ -23,6 +24,10 @@ struct User: ProducesCardViewModel {
         attributedText.append(NSAttributedString(string: "\n\(profession)", attributes: [.font:UIFont.systemFont(ofSize: 20, weight: .regular)]))
         attributedText.append(NSAttributedString(string: "\n\(city)", attributes: [.font:UIFont.systemFont(ofSize: 20, weight: .regular)]))
         
-        return CardViewModel(imageName: imageName, attributedString: attributedText, textAlignment: .left)
+        let captionAttributedStr = NSMutableAttributedString(string: name, attributes: [.font:UIFont.systemFont(ofSize: 32, weight: .heavy)])
+        captionAttributedStr.append(NSAttributedString(string: "  \(age)", attributes: [.font:UIFont.systemFont(ofSize: 24, weight: .regular)]))
+        captionAttributedStr.append(NSAttributedString(string: "\n\(caption)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .regular)])) 
+        
+        return CardViewModel(imageNames: imageNames, attributedString: attributedText, textAlignment: .left, captionStr: captionAttributedStr)
     }
 }

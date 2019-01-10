@@ -13,10 +13,33 @@ protocol ProducesCardViewModel {
     func toCardViewModel() -> CardViewModel
 }
 
-struct CardViewModel {
+class CardViewModel {
     
     //MARK:- Properties
-    let imageName: String
+    let imageNames: [String]
     let attributedString: NSAttributedString
     let textAlignment: NSTextAlignment
+    let captionString: NSAttributedString
+    fileprivate var imageIndex = 0 {
+        didSet{
+            let image = UIImage(named: imageNames[imageIndex])
+            imageIndexObserver?(imageIndex,image)
+        }
+    }
+    
+    init(imageNames: [String], attributedString: NSAttributedString, textAlignment: NSTextAlignment, captionStr: NSAttributedString = NSAttributedString(string: "")) {
+        self.imageNames = imageNames
+        self.attributedString = attributedString
+        self.textAlignment = textAlignment
+        self.captionString = captionStr
+    }
+    
+    func goToNextPhoto(){
+        imageIndex = min(imageIndex + 1, imageNames.count - 1)
+    }
+    func goToPreviousPhoto(){
+        imageIndex = max(imageIndex - 1, 0)
+    }
+    //一个闭包：用于观察index的状态以及反应
+    var imageIndexObserver: ((Int, UIImage?) -> ())?
 }
