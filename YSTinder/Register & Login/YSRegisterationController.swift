@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
+
 
 class YSRegisterationController: UIViewController {
     
@@ -15,8 +18,13 @@ class YSRegisterationController: UIViewController {
         
         setupGradientLayer()
         setupLayout()
-        setupNotificationObservers()
         setupTapGesture()
+        setupRegisterationViewModelBindables()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNotificationObservers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,6 +57,9 @@ class YSRegisterationController: UIViewController {
         button.heightAnchor.constraint(equalToConstant: 275).isActive = true
         button.widthAnchor.constraint(equalToConstant: 275).isActive = true
         button.layer.cornerRadius = 16
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
+        button.clipsToBounds = true
+        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
     
@@ -56,6 +67,7 @@ class YSRegisterationController: UIViewController {
     let fullNameTextField: YSCustomTextField = {
         let tf = YSCustomTextField(padding: 16)
         tf.placeholder = "输入名字"
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     
@@ -63,6 +75,8 @@ class YSRegisterationController: UIViewController {
         let tf = YSCustomTextField(padding: 16)
         tf.placeholder = "输入邮箱"
         tf.keyboardType = .emailAddress
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+
         return tf
     }()
     
@@ -70,16 +84,19 @@ class YSRegisterationController: UIViewController {
         let tf = YSCustomTextField(padding: 16)
         tf.placeholder = "输入密码"
         tf.isSecureTextEntry = true
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     
     let registerButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.layer.cornerRadius = 25
-        btn.setTitleColor(.white, for: .normal)
         btn.setTitle("注册", for: .normal)
-        btn.backgroundColor = #colorLiteral(red: 0.8132490516, green: 0.09731306881, blue: 0.3328936398, alpha: 1)
+        btn.backgroundColor = .lightGray
+        btn.setTitleColor(.gray, for: .disabled)
+        btn.isEnabled = false
         btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        btn.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return btn
     }()
     
@@ -100,6 +117,23 @@ class YSRegisterationController: UIViewController {
         vsv.spacing = 8
         return vsv
     }()
+    
+    @objc fileprivate func handleSelectPhoto(){
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+    }
+    
+    //每次在textfield输入，都将text传给viewModel
+    @objc fileprivate func handleTextChange(textField: UITextField){
+        if textField == fullNameTextField{
+            registeraionViewModel.fullName = textField.text
+        } else if textField == emailTextField {
+            registeraionViewModel.email = textField.text
+        } else if textField == passwordTextField {
+            registeraionViewModel.password = textField.text
+        }
+    }
     
     fileprivate func setupLayout() {
         view.addSubview(overallStackView)
@@ -146,5 +180,72 @@ class YSRegisterationController: UIViewController {
     
     @objc fileprivate func handleKeyboardHide(notification: Notification){
         self.view.transform = CGAffineTransform(translationX: 0, y: 0)
+    }
+    
+    //MARK:- Registeration
+    let registeringHUD = JGProgressHUD(style: .dark)
+    
+    fileprivate func showSuccessHUD() {
+        self.registeringHUD.indicatorView = JGProgressHUDSuccessIndicatorView()
+        self.registeringHUD.detailTextLabel.text = ""
+        self.registeringHUD.textLabel.text = "注册成功"
+        self.registeringHUD.dismiss(afterDelay: 1, animated: true)
+    }
+    
+    @objc fileprivate func handleRegister(){
+        //收键盘
+        self.view.endEditing(true)
+        
+        // register to firebase
+        registeraionViewModel.performRegisteration { (err) in
+            if let err = err {
+                showErrorHUD(title: "注册失败", detail: err.localizedDescription, view: self.view)
+                return
+            } else {
+                self.showSuccessHUD()
+            }
+        }
+    }
+    
+    let registeraionViewModel = RegisterationViewModel()
+    
+    // 在启动时设置好的bindable在之后变量的didSet中调用到时都会启用bind方法
+    fileprivate func setupRegisterationViewModelBindables(){
+        
+        // 使用bind方法中的闭包获得isFormValid，以决定UI显示
+        registeraionViewModel.bindableIsFormValid.bind(observer: { [weak self] (isFormValid) in
+            guard let isFormValid = isFormValid else {return}
+            self?.registerButton.isEnabled = isFormValid
+            self?.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8132490516, green: 0.09731306881, blue: 0.3328936398, alpha: 1) : .lightGray
+            if isFormValid {
+                self?.registerButton.setTitleColor(.white, for: .normal)
+            } else {
+                self?.registerButton.setTitleColor(.gray, for: .disabled)
+            }
+        })
+    
+        registeraionViewModel.bindableImage.bind(observer: { [weak self] (image) in
+            self?.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        })
+        
+        registeraionViewModel.bindableIsRegistering.bind { [unowned self] (isRegistering) in
+            if isRegistering == true {
+                self.registeringHUD.textLabel.text = "注册中"
+                self.registeringHUD.show(in: self.view)
+            } else {
+                self.registeringHUD.dismiss(animated: true)
+            }
+        }
+    }
+}
+
+extension YSRegisterationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        registeraionViewModel.bindableImage.value = info[.originalImage] as? UIImage
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
