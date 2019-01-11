@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BottomControlsStackView: UIStackView {
+class YSBottomControlsStackView: UIStackView {
 
     let refreshButton = createButton(image: #imageLiteral(resourceName: "refresh_circle"))
     let dislikeButton = createButton(image: #imageLiteral(resourceName: "dismiss_circle"))

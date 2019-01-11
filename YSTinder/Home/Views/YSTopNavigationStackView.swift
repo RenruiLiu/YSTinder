@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TopNavigationStackView: UIStackView {
+class YSTopNavigationStackView: UIStackView {
     
     let settingsButton = createButton(image: #imageLiteral(resourceName: "top_left_profile"))
     let fireImageView = UIImageView(image: #imageLiteral(resourceName: "app_icon"))
@@ -25,6 +25,7 @@ class TopNavigationStackView: UIStackView {
         layoutMargins = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
     
+
     //MARK:- UI
     func setupViews() {
         fireImageView.contentMode = .scaleAspectFit

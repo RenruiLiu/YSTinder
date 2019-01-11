@@ -10,10 +10,10 @@ import UIKit
 
 // 通过这个Protocol声明所有Model都有转成CardViewModel的方法
 protocol ProducesCardViewModel {
-    func toCardViewModel() -> CardViewModel
+    func toCardViewModel() -> YSCardViewModel
 }
 
-class CardViewModel {
+class YSCardViewModel {
     
     //MARK:- Properties
     let imageNames: [String]

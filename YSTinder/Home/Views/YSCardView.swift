@@ -9,10 +9,10 @@
 import UIKit
 import AudioToolbox
 
-class CardView: UIView {
+class YSCardView: UIView {
 
     //MARK:- Properties
-    var cardViewModel: CardViewModel!{
+    var cardViewModel: YSCardViewModel!{
         didSet{
             didSetCardViewModel()
             setupImageIndexObserver()
@@ -151,8 +151,8 @@ class CardView: UIView {
         }
     }
     
-    fileprivate func getNextCard() -> CardView? {
-        let cards = superview?.subviews as! [CardView]
+    fileprivate func getNextCard() -> YSCardView? {
+        let cards = superview?.subviews as! [YSCardView]
         let nextIndex = cards.count - 2
         let nextCard = nextIndex < 0 ? nil : cards[nextIndex]
         return nextCard
