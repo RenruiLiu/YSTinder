@@ -40,34 +40,38 @@ class RegisterationViewModel {
                 return
             }
             
-            //注册新用户成功
-            // 存照片
-            let imageFileName = UUID().uuidString
-            let reference = Storage.storage().reference(withPath: "/images/\(imageFileName)")
-            let imageData = self.bindableImage.value?.jpegData(compressionQuality: 0.75) ?? Data()
-            reference.putData(imageData, metadata: nil, completion: { (_, err) in
-                if let err = err {
-                    print("Failed to store image:",err)
+            //注册新用户成功,存照片到库
+            self.saveImageToFirebase(completion: completion)
+        }
+    }
+    
+    fileprivate func saveImageToFirebase(completion: @escaping (Error?) -> ()){
+        // 存照片
+        let imageFileName = UUID().uuidString
+        let reference = Storage.storage().reference(withPath: "/images/\(imageFileName)")
+        let imageData = self.bindableImage.value?.jpegData(compressionQuality: 0.75) ?? Data()
+        reference.putData(imageData, metadata: nil, completion: { (_, err) in
+            if let err = err {
+                print("Failed to store image:",err)
+                self.bindableIsRegistering.value = false
+                completion(err)
+                return
+            }
+            
+            //存储照片成功
+            //获取照片地址
+            reference.downloadURL(completion: { (url, err) in
+                if let err = err{
                     self.bindableIsRegistering.value = false
                     completion(err)
                     return
                 }
                 
-                //存储照片成功
-                //获取照片地址
-                reference.downloadURL(completion: { (url, err) in
-                    if let err = err{
-                        self.bindableIsRegistering.value = false
-                        completion(err)
-                        return
-                    }
-                    
-                    print("image url is:", url?.absoluteString ?? "")
-                })
+                print("image url is:", url?.absoluteString ?? "")
                 
-                completion(nil)
                 //跳入主页面
+                completion(nil)
             })
-        }
+        })
     }
 }
