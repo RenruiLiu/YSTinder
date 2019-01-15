@@ -19,7 +19,7 @@
 		7E0BA39B21E5DADF0067D792 /* YSUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39A21E5DADF0067D792 /* YSUser.swift */; };
 		7E0BA39E21E5E6370067D792 /* YSCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39D21E5E6370067D792 /* YSCardViewModel.swift */; };
 		7E0BA3A021E5F80C0067D792 /* YSAdvertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39F21E5F80C0067D792 /* YSAdvertiser.swift */; };
-		7E1FE87A21ED76F2007880D9 /* FirestoreRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FE87921ED76F2007880D9 /* FirestoreRegister.swift */; };
+		7E1FE87A21ED76F2007880D9 /* YSFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FE87921ED76F2007880D9 /* YSFirestore.swift */; };
 		7E28046021E82DA70025F6DC /* YSRegisterationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E28045F21E82DA70025F6DC /* YSRegisterationController.swift */; };
 		7E28046221E837B90025F6DC /* YSCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E28046121E837B90025F6DC /* YSCustomTextField.swift */; };
 		7E6E593E21E8635B00E5DFA4 /* RegisterationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6E593D21E8635B00E5DFA4 /* RegisterationViewModel.swift */; };
@@ -45,7 +45,7 @@
 		7E0BA39A21E5DADF0067D792 /* YSUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSUser.swift; sourceTree = "<group>"; };
 		7E0BA39D21E5E6370067D792 /* YSCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSCardViewModel.swift; sourceTree = "<group>"; };
 		7E0BA39F21E5F80C0067D792 /* YSAdvertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSAdvertiser.swift; sourceTree = "<group>"; };
-		7E1FE87921ED76F2007880D9 /* FirestoreRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRegister.swift; sourceTree = "<group>"; };
+		7E1FE87921ED76F2007880D9 /* YSFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSFirestore.swift; sourceTree = "<group>"; };
 		7E28045F21E82DA70025F6DC /* YSRegisterationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSRegisterationController.swift; sourceTree = "<group>"; };
 		7E28046121E837B90025F6DC /* YSCustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSCustomTextField.swift; sourceTree = "<group>"; };
 		7E6E593D21E8635B00E5DFA4 /* RegisterationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterationViewModel.swift; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 		7E6E594621E899A400E5DFA4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				7E1FE87921ED76F2007880D9 /* FirestoreRegister.swift */,
+				7E1FE87921ED76F2007880D9 /* YSFirestore.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -357,7 +357,7 @@
 				7E28046221E837B90025F6DC /* YSCustomTextField.swift in Sources */,
 				7E0BA37D21E584810067D792 /* AppDelegate.swift in Sources */,
 				7E6E594521E8888600E5DFA4 /* YSJGProgressHUD.swift in Sources */,
-				7E1FE87A21ED76F2007880D9 /* FirestoreRegister.swift in Sources */,
+				7E1FE87A21ED76F2007880D9 /* YSFirestore.swift in Sources */,
 				7E28046021E82DA70025F6DC /* YSRegisterationController.swift in Sources */,
 				7E0BA39021E58D700067D792 /* Extensions+UIView.swift in Sources */,
 				7E0BA39E21E5E6370067D792 /* YSCardViewModel.swift in Sources */,

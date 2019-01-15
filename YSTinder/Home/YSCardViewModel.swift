@@ -43,3 +43,4 @@ class YSCardViewModel {
     //一个闭包：用于观察index的状态以及反应
     var imageIndexObserver: ((Int, String) -> ())?
 }
+

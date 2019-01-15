@@ -17,3 +17,11 @@ func showErrorHUD(title: String, detail: String, view: UIView){
     hud.dismiss(afterDelay: 3, animated: true)
 }
 
+func showWaitingHUD(title: String, detail: String, view: UIView) -> JGProgressHUD{
+    let hud = JGProgressHUD(style: .dark)
+    hud.indicatorView = JGProgressHUDIndeterminateIndicatorView()
+    hud.textLabel.text = title
+    hud.detailTextLabel.text = detail
+    hud.show(in: view)
+    return hud
+}

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import JGProgressHUD
 
 class YSHomeController : UIViewController {
 
@@ -43,7 +44,7 @@ class YSHomeController : UIViewController {
         
         setupLayout()
         setupButtons()
-        fetchUserFromFirestore()
+        fetchUsers_setupCards()
     }
 
     //MARK:- UI
@@ -51,7 +52,10 @@ class YSHomeController : UIViewController {
         for (_,cardVM) in cardViewModels.enumerated() {
             let cardView = YSCardView(frame: .zero)
             cardView.cardViewModel = cardVM
-            cardsDeckView.addSubview(cardView)
+            cardsDeckView.insertSubview(cardView, at: 0)
+            //将新加入的卡放到最后面
+//            cardsDeckView.addSubview(cardView)
+//            cardsDeckView.sendSubviewToBack(cardView)
             cardView.fillSuperview()
         }
     }
@@ -75,28 +79,24 @@ class YSHomeController : UIViewController {
     //MARK:- Button
     fileprivate func setupButtons() {
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        bottomStackView.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
     }
     
     @objc fileprivate func handleSettings(){
         present(YSRegisterationController(),animated: true)
     }
     
-    //MARK:- Network
-    fileprivate func fetchUserFromFirestore(){
-        Firestore.firestore().collection("users").getDocuments { (snapshot, err) in
-            if let err = err {
-                print("Failed to fetch users:",err)
-                return
-            }
-            
-            snapshot?.documents.forEach({ (documentSnapshot) in
-                let userDictionary = documentSnapshot.data()
-                let user = YSUser(dictionary: userDictionary)
-                self.cardViewModels.append(user.toCardViewModel())
-            })
-            //已获取所有cardViewModels，将其setup到View
-            self.setupCards()
-        }
+    @objc fileprivate func handleRefresh(){
+        fetchUsers_setupCards()
     }
     
+    fileprivate func fetchUsers_setupCards(){
+        let refreshingHUD = showWaitingHUD(title: "刷新中", detail: "正在获取新用户", view: view)
+        
+        fetchUserFromFirestore { [weak self] (viewModels) in
+            self?.cardViewModels = viewModels
+            self?.setupCards()
+            refreshingHUD.dismiss(animated: true)
+        }
+    }
 }

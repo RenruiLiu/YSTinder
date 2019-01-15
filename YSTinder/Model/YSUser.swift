@@ -36,7 +36,7 @@ struct YSUser: ProducesCardViewModel {
         self.name = dictionary["fullName"] as? String
         self.age = dictionary["age"] as? Int
         self.profession = dictionary["profession"] as? String
-        self.imageUrls = dictionary["imageUrl"] as? [String]
+        self.imageUrls = [dictionary["imageUrl"] as? String] as? [String]
         self.city = dictionary["city"] as? String
         self.caption = dictionary["caption"] as? String
         self.uid = dictionary["uid"] as? String

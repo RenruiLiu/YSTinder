@@ -84,3 +84,33 @@ extension RegisterationViewModel {
         }
     }
 }
+
+fileprivate var lastFetchedUser: YSUser?
+
+func fetchUserFromFirestore(completion: @escaping ([YSCardViewModel]) -> ()){
+    let query = Firestore.firestore().collection("users")
+    
+    // whereField：范围筛选 18~30岁的用户，只可以在同一个filed内筛选
+    // 还可以 arrayContains 筛选 一个array Field中包含了 某元素的 成员
+//    query.whereField("age", isLessThan: 30).whereField("age", isGreaterThan: 18)
+    
+    // pagination：根据uid的order，每次2个
+    let filteredQuery = query.order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 2)
+        filteredQuery.getDocuments { (snapshot, err) in
+        if let err = err {
+            print("Failed to fetch users:",err)
+            return
+        }
+        
+        var cardViewModels = [] as [YSCardViewModel]
+        snapshot?.documents.forEach({ (documentSnapshot) in
+            let userDictionary = documentSnapshot.data()
+            let user = YSUser(dictionary: userDictionary)
+            cardViewModels.append(user.toCardViewModel())
+            lastFetchedUser = user
+        })
+        print("加载了", cardViewModels.count,"个用户，最后一位的名字是：",lastFetchedUser?.name)
+        //已获取所有cardViewModels，将其setup到View
+        completion(cardViewModels)
+    }
+}
