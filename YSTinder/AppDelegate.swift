@@ -17,11 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        // firebase configuration
         FirebaseApp.configure()
+        let db = Firestore.firestore()
+        let settings = db.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        db.settings = settings
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-        window?.rootViewController = YSRegisterationController()
+        window?.rootViewController = YSHomeController()
         
         return true
     }

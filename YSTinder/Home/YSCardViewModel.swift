@@ -16,30 +16,30 @@ protocol ProducesCardViewModel {
 class YSCardViewModel {
     
     //MARK:- Properties
-    let imageNames: [String]
+    let imageUrls: [String]
     let attributedString: NSAttributedString
     let textAlignment: NSTextAlignment
     let captionString: NSAttributedString
     fileprivate var imageIndex = 0 {
         didSet{
-            let image = UIImage(named: imageNames[imageIndex])
-            imageIndexObserver?(imageIndex,image)
+            let imageUrl = imageUrls[imageIndex]
+            imageIndexObserver?(imageIndex,imageUrl)
         }
     }
     
-    init(imageNames: [String], attributedString: NSAttributedString, textAlignment: NSTextAlignment, captionStr: NSAttributedString = NSAttributedString(string: "")) {
-        self.imageNames = imageNames
+    init(imageUrls: [String], attributedString: NSAttributedString, textAlignment: NSTextAlignment, captionStr: NSAttributedString = NSAttributedString(string: "")) {
+        self.imageUrls = imageUrls
         self.attributedString = attributedString
         self.textAlignment = textAlignment
         self.captionString = captionStr
     }
     
     func goToNextPhoto(){
-        imageIndex = min(imageIndex + 1, imageNames.count - 1)
+        imageIndex = min(imageIndex + 1, imageUrls.count - 1)
     }
     func goToPreviousPhoto(){
         imageIndex = max(imageIndex - 1, 0)
     }
     //一个闭包：用于观察index的状态以及反应
-    var imageIndexObserver: ((Int, UIImage?) -> ())?
+    var imageIndexObserver: ((Int, String) -> ())?
 }

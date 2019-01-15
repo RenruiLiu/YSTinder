@@ -8,6 +8,7 @@
 
 import UIKit
 import AudioToolbox
+import SDWebImage
 
 class YSCardView: UIView {
 
@@ -33,18 +34,21 @@ class YSCardView: UIView {
     fileprivate func setupImageIndexObserver(){
         //view的点击事件触发index改变，传到viewModel，viewModel又通过observer通知view改变图片
         //通过index改变图片和bar
-        cardViewModel.imageIndexObserver = { [weak self] (index, image) in
-            self?.imageView.image = image
-            //set bars to the right color
-            self?.barsStackView.arrangedSubviews.forEach {(bar) in
-                bar.backgroundColor = self?.barDeselectedColor
-            }
-            self?.barsStackView.arrangedSubviews[index].backgroundColor = .white
-            
-            if index > 0 {
-                self?.informationLabel.attributedText = self?.cardViewModel.captionString
-            } else {
-                self?.informationLabel.attributedText = self?.cardViewModel.attributedString
+        cardViewModel.imageIndexObserver = { [weak self] (index, imageUrlStr) in
+            if let url = URL(string: imageUrlStr){
+                self?.imageView.sd_setImage(with: url, completed: nil)
+                
+                //set bars to the right color
+                self?.barsStackView.arrangedSubviews.forEach {(bar) in
+                    bar.backgroundColor = self?.barDeselectedColor
+                }
+                self?.barsStackView.arrangedSubviews[index].backgroundColor = .white
+                
+                if index > 0 {
+                    self?.informationLabel.attributedText = self?.cardViewModel.captionString
+                } else {
+                    self?.informationLabel.attributedText = self?.cardViewModel.attributedString
+                }
             }
         }
     }
@@ -52,8 +56,13 @@ class YSCardView: UIView {
     //MARK:- Layout
     
     fileprivate func didSetCardViewModel() {
-        let imageName = cardViewModel.imageNames.first ?? ""
-        imageView.image = UIImage(named: imageName)
+        let imageUrlStr = cardViewModel.imageUrls.first ?? ""
+//        imageView.image = UIImage(named: imageName)
+        
+        if let imageUrl = URL(string: imageUrlStr) {
+            imageView.sd_setImage(with: imageUrl, completed: nil)
+        }
+        
         informationLabel.attributedText = cardViewModel.attributedString
         informationLabel.textAlignment = cardViewModel.textAlignment
         setupBars()
@@ -88,7 +97,7 @@ class YSCardView: UIView {
     }
     
     fileprivate func setupBars(){
-        (0..<cardViewModel.imageNames.count).forEach { (_) in
+        (0..<cardViewModel.imageUrls.count).forEach { (_) in
             let barView = UIView()
             barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
             barsStackView.addArrangedSubview(barView)
@@ -158,6 +167,7 @@ class YSCardView: UIView {
         return nextCard
     }
     
+    //当图片被拖拽出去时发送震动
     func sendLightImpact() {
         let lightImpact = UIImpactFeedbackGenerator(style: .light)
         lightImpact.impactOccurred()
