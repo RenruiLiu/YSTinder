@@ -13,7 +13,7 @@ class YSCustomImagePickerController: UIImagePickerController {
     var imageButton: UIButton?
 }
 
-class YSSettingsController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class YSSettingsController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TLCityPickerDelegate {    
     
     //MARK:- properties
     lazy var imageButton1 = createButton(selector: #selector(handleSelectPhoto))
@@ -97,7 +97,6 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
         imageButton?.setImage(selectedImage?.withRenderingMode(.alwaysOriginal), for: .normal)
         dismiss(animated: true, completion: nil)
     }
-    
     
 
 }
