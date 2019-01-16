@@ -83,7 +83,8 @@ class YSHomeController : UIViewController {
     }
     
     @objc fileprivate func handleSettings(){
-        present(YSRegisterationController(),animated: true)
+        present(UINavigationController(rootViewController: YSSettingsController()), animated: true, completion: nil)
+//        present(YSRegisterationController(),animated: true)
     }
     
     @objc fileprivate func handleRefresh(){

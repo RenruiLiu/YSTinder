@@ -20,6 +20,9 @@
 		7E0BA39E21E5E6370067D792 /* YSCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39D21E5E6370067D792 /* YSCardViewModel.swift */; };
 		7E0BA3A021E5F80C0067D792 /* YSAdvertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0BA39F21E5F80C0067D792 /* YSAdvertiser.swift */; };
 		7E1FE87A21ED76F2007880D9 /* YSFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FE87921ED76F2007880D9 /* YSFirestore.swift */; };
+		7E1FE87D21EEC3AC007880D9 /* YSSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FE87C21EEC3AC007880D9 /* YSSettingsController.swift */; };
+		7E1FE87F21EED0AB007880D9 /* YSSettingsController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FE87E21EED0AB007880D9 /* YSSettingsController+TableView.swift */; };
+		7E1FE88321EED5A2007880D9 /* YSSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FE88221EED5A2007880D9 /* YSSettingsCell.swift */; };
 		7E28046021E82DA70025F6DC /* YSRegisterationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E28045F21E82DA70025F6DC /* YSRegisterationController.swift */; };
 		7E28046221E837B90025F6DC /* YSCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E28046121E837B90025F6DC /* YSCustomTextField.swift */; };
 		7E6E593E21E8635B00E5DFA4 /* RegisterationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6E593D21E8635B00E5DFA4 /* RegisterationViewModel.swift */; };
@@ -46,6 +49,9 @@
 		7E0BA39D21E5E6370067D792 /* YSCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSCardViewModel.swift; sourceTree = "<group>"; };
 		7E0BA39F21E5F80C0067D792 /* YSAdvertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSAdvertiser.swift; sourceTree = "<group>"; };
 		7E1FE87921ED76F2007880D9 /* YSFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSFirestore.swift; sourceTree = "<group>"; };
+		7E1FE87C21EEC3AC007880D9 /* YSSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSSettingsController.swift; sourceTree = "<group>"; };
+		7E1FE87E21EED0AB007880D9 /* YSSettingsController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YSSettingsController+TableView.swift"; sourceTree = "<group>"; };
+		7E1FE88221EED5A2007880D9 /* YSSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSSettingsCell.swift; sourceTree = "<group>"; };
 		7E28045F21E82DA70025F6DC /* YSRegisterationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSRegisterationController.swift; sourceTree = "<group>"; };
 		7E28046121E837B90025F6DC /* YSCustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSCustomTextField.swift; sourceTree = "<group>"; };
 		7E6E593D21E8635B00E5DFA4 /* RegisterationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterationViewModel.swift; sourceTree = "<group>"; };
@@ -102,6 +108,7 @@
 				7E6E594321E8887300E5DFA4 /* Util */,
 				7E28045E21E82CE10025F6DC /* Register & Login */,
 				7E0BA39921E5DAD20067D792 /* Model */,
+				7E1FE87B21EEC37E007880D9 /* Settings */,
 				7E0BA39621E59C270067D792 /* Home */,
 				7E0BA38E21E58D330067D792 /* Extensions */,
 				7E0BA37C21E584810067D792 /* AppDelegate.swift */,
@@ -136,8 +143,8 @@
 		7E0BA39621E59C270067D792 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				7E0BA39D21E5E6370067D792 /* YSCardViewModel.swift */,
-				7E0BA37E21E584810067D792 /* YSHomeController.swift */,
+				7E1FE88521EED5BA007880D9 /* ViewModel */,
+				7E1FE88421EED5B1007880D9 /* Controller */,
 				7E0BA39121E5979C0067D792 /* Views */,
 			);
 			path = Home;
@@ -152,11 +159,77 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		7E28045E21E82CE10025F6DC /* Register & Login */ = {
+		7E1FE87B21EEC37E007880D9 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7E1FE88121EED583007880D9 /* Controller */,
+				7E1FE88021EED57B007880D9 /* Views */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		7E1FE88021EED57B007880D9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7E1FE88221EED5A2007880D9 /* YSSettingsCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7E1FE88121EED583007880D9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7E1FE87C21EEC3AC007880D9 /* YSSettingsController.swift */,
+				7E1FE87E21EED0AB007880D9 /* YSSettingsController+TableView.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7E1FE88421EED5B1007880D9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7E0BA37E21E584810067D792 /* YSHomeController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7E1FE88521EED5BA007880D9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7E0BA39D21E5E6370067D792 /* YSCardViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7E1FE88621EED5CE007880D9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				7E28045F21E82DA70025F6DC /* YSRegisterationController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7E1FE88721EED5D4007880D9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7E1FE88821EED5D8007880D9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
 				7E6E593D21E8635B00E5DFA4 /* RegisterationViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7E28045E21E82CE10025F6DC /* Register & Login */ = {
+			isa = PBXGroup;
+			children = (
+				7E1FE88821EED5D8007880D9 /* ViewModel */,
+				7E1FE88721EED5D4007880D9 /* View */,
+				7E1FE88621EED5CE007880D9 /* Controller */,
 			);
 			path = "Register & Login";
 			sourceTree = "<group>";
@@ -355,10 +428,13 @@
 				7E0BA3A021E5F80C0067D792 /* YSAdvertiser.swift in Sources */,
 				7E6E593E21E8635B00E5DFA4 /* RegisterationViewModel.swift in Sources */,
 				7E28046221E837B90025F6DC /* YSCustomTextField.swift in Sources */,
+				7E1FE87F21EED0AB007880D9 /* YSSettingsController+TableView.swift in Sources */,
+				7E1FE87D21EEC3AC007880D9 /* YSSettingsController.swift in Sources */,
 				7E0BA37D21E584810067D792 /* AppDelegate.swift in Sources */,
 				7E6E594521E8888600E5DFA4 /* YSJGProgressHUD.swift in Sources */,
 				7E1FE87A21ED76F2007880D9 /* YSFirestore.swift in Sources */,
 				7E28046021E82DA70025F6DC /* YSRegisterationController.swift in Sources */,
+				7E1FE88321EED5A2007880D9 /* YSSettingsCell.swift in Sources */,
 				7E0BA39021E58D700067D792 /* Extensions+UIView.swift in Sources */,
 				7E0BA39E21E5E6370067D792 /* YSCardViewModel.swift in Sources */,
 				7E0BA39821E5A5200067D792 /* YSCardView.swift in Sources */,
