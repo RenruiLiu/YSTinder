@@ -19,13 +19,8 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
     lazy var imageButton1 = createButton(selector: #selector(handleSelectPhoto))
     lazy var imageButton2 = createButton(selector: #selector(handleSelectPhoto))
     lazy var imageButton3 = createButton(selector: #selector(handleSelectPhoto))
-    let settingsDictionary = [
-        "昵称" : "称呼我为",
-        "职业" : "我的职业是",
-        "年龄" : "我的年龄是",
-        "城市" : "我住在哪里",
-        "个性签名" : "个性签名"
-        ] as [String : String]
+    let settingsSections = [["昵称","职业","年龄","城市","个性签名"],
+        ["称呼我为","我的职业是","我的年龄是","我住在哪里","个性签名"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()

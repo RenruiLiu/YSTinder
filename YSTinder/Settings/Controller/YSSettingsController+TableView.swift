@@ -24,8 +24,7 @@ extension YSSettingsController{
         } else {
             let headerLabel = HeaderLabel()
             headerLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-            let keys = [String](settingsDictionary.keys)
-            headerLabel.text = keys[section-1]
+            headerLabel.text = settingsSections[0][section - 1]
             return headerLabel
         }
     }
@@ -38,11 +37,9 @@ extension YSSettingsController{
         }
     }
     
-    
     // MARK: - Table view data source
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return settingsDictionary.count + 1
+        return settingsSections[0].count + 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -51,6 +48,8 @@ extension YSSettingsController{
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = YSSettingsCell(style: .default, reuseIdentifier: nil)
+        //每行的textfield的placeholder
+        cell.textField.placeholder = settingsSections[1][indexPath.section - 1]
         return cell
     }
 
