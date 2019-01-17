@@ -11,6 +11,7 @@ pod 'Firebase/Storage’
 pod 'Firebase/Core’
 pod 'SDWebImage','~>4.4.2’
 pod 'JGProgressHUD','~>2.0.3'
+pod 'ReachabilitySwift'
   # Pods for YSTinder
 
 end

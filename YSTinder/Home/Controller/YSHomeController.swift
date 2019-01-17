@@ -94,7 +94,7 @@ class YSHomeController : UIViewController {
     fileprivate func fetchUsers_setupCards(){
         let refreshingHUD = showWaitingHUD(title: "刷新中", detail: "正在获取新用户", view: view)
         
-        fetchUserFromFirestore { [weak self] (viewModels) in
+        fetchUsersFromFirestore { [weak self] (viewModels) in
             self?.cardViewModels = viewModels
             self?.setupCards()
             refreshingHUD.dismiss(animated: true)

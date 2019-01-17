@@ -46,14 +46,41 @@ extension YSSettingsController{
         return section == 0 ? 0 : 1
     }
     
+    fileprivate func setupCellTextField(_ indexPath: IndexPath, _ cell: YSSettingsCell) {
+        let textField = cell.textField
+        //获取currentUser数据后在这reload用户的数据到Textfield
+        switch indexPath.section {
+        case 1:
+            textField.text = currentUser?.name
+            textField.addTarget(self, action: #selector(handleTextFieldTextChange), for: .editingChanged)
+        case 2:
+            textField.text = currentUser?.profession
+            textField.addTarget(self, action: #selector(handleTextFieldTextChange), for: .editingChanged)
+        case 3:
+            if let age = currentUser?.age {
+                textField.text = "\(age)"
+            }
+            textField.keyboardType = .numberPad
+            textField.addTarget(self, action: #selector(handleTextFieldTextChange), for: .editingChanged)
+        case 4:
+            textField.text = currentUser?.city
+            //给城市一栏添加点击事件
+            textField.addTarget(self, action: #selector(handleSelectCity), for: .editingDidBegin)
+        case 5:
+            textField.text = currentUser?.caption
+            textField.addTarget(self, action: #selector(handleTextFieldTextChange), for: .editingChanged)
+        default:
+            break
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = YSSettingsCell(style: .default, reuseIdentifier: nil)
+        
+        setupCellTextField(indexPath, cell)
         //每行的textfield的placeholder
         cell.textField.placeholder = settingsSections[1][indexPath.section - 1]
-        //给城市一栏添加点击事件
-        if indexPath == .init(row: 0, section: 4) {
-            cell.textField.addTarget(self, action: #selector(handleSelectCity), for: .editingDidBegin)
-        }
+
         return cell
     }
 
@@ -62,6 +89,8 @@ extension YSSettingsController{
     }
     
     @objc fileprivate func handleSelectCity(_ textField: YSCustomTextField){
+        cityTextField = textField
+        
         let cityPicker = TLCityPickerController()
         cityPicker.delegate = self
         cityPicker.hotCitys = ["100010000", "200010000", "300210000", "600010000", "300110000"]
@@ -70,10 +99,8 @@ extension YSSettingsController{
     }
     
     func cityPickerController(_ cityPickerViewController: TLCityPickerController!, didSelect city: TLCity!) {
-        print("选择了",city.cityName)
-        //并不会成功，因为cell是复制品
-        let cell = tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 4)) as? YSSettingsCell
-        cell?.textField.text = city.cityName
+        cityTextField?.text = city.cityName
+        currentUser?.city = city.cityName
         navigationController?.popViewController(animated: true)
     }
     

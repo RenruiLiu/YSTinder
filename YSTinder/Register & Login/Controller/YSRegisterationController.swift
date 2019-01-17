@@ -64,7 +64,7 @@ class YSRegisterationController: UIViewController {
     }()
     
     
-    let fullNameTextField: YSCustomTextField = {
+    let nameTextField: YSCustomTextField = {
         let tf = YSCustomTextField(padding: 16)
         tf.placeholder = "输入名字"
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
@@ -107,7 +107,7 @@ class YSRegisterationController: UIViewController {
     
     lazy var verticalStackView: UIStackView = {
         let vsv = UIStackView(arrangedSubviews: [
-        fullNameTextField,
+        nameTextField,
         emailTextField,
         passwordTextField,
         registerButton
@@ -126,8 +126,8 @@ class YSRegisterationController: UIViewController {
     
     //每次在textfield输入，都将text传给viewModel
     @objc fileprivate func handleTextChange(textField: UITextField){
-        if textField == fullNameTextField{
-            registeraionViewModel.fullName = textField.text
+        if textField == nameTextField{
+            registeraionViewModel.name = textField.text
         } else if textField == emailTextField {
             registeraionViewModel.email = textField.text
         } else if textField == passwordTextField {

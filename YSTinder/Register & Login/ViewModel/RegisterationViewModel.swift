@@ -16,7 +16,7 @@ class RegisterationViewModel {
     var bindableIsRegistering = Bindable<Bool>()
     
     // 收到新值调用check方法检查
-    var fullName: String?{didSet{ checkIsFormValid() }}
+    var name: String?{didSet{ checkIsFormValid() }}
     var email: String?{didSet{ checkIsFormValid() }}
     var password: String?{didSet{ checkIsFormValid() }}
     

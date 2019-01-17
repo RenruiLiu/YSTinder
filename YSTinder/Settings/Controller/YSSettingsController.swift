@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SDWebImage
+import Firebase
 
 // 继承一个imagePickerController中含有一个button -> 可以让didFinishPickingMediaWithInfo中，通过picker获取到这个button
 class YSCustomImagePickerController: UIImagePickerController {
@@ -28,6 +30,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
         setupLayout()
         setupNavigationBar()
         tableView.keyboardDismissMode = .interactive
+        deployCurrentUser()
     }
     
     //MARK:- nav bar
@@ -37,7 +40,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: .plain, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(title: "保存", style: .plain, target: self, action: #selector(handleCancel)),
+            UIBarButtonItem(title: "保存", style: .plain, target: self, action: #selector(handleSave)),
             UIBarButtonItem(title: "注销", style: .plain, target: self, action: #selector(handleCancel))
         ]
     }
@@ -80,6 +83,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
         button.clipsToBounds = true
         button.addTarget(self, action: selector, for: .touchUpInside)
         button.imageView?.contentMode = .scaleAspectFill
+        button.imageView?.image?.withRenderingMode(.alwaysOriginal)
         return button
     }
     
@@ -96,7 +100,82 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
         let imageButton = (picker as? YSCustomImagePickerController)?.imageButton
         imageButton?.setImage(selectedImage?.withRenderingMode(.alwaysOriginal), for: .normal)
         dismiss(animated: true, completion: nil)
+        setImageForUser(selectedImage)
     }
     
+    //MARK:- Load User
+    var cityTextField: YSCustomTextField?
+    var currentUser: YSUser?
+    
+    fileprivate func deployCurrentUser(){
+        fetchCurrentUser { [weak self] (user) in
+            self?.currentUser = user
+            self?.tableView.reloadData()
+            self?.loadUserPhotos()
+        }
+    }
+    
+    fileprivate func loadUserPhotos(){
+        var imageUrls = [] as [URL]
+        currentUser?.imageUrls?.forEach({ (urlStr) in
+            if let url = URL(string: urlStr) {
+                imageUrls.append(url)
+            }
+        })
+        let buttons = [imageButton1,imageButton2,imageButton3]
+        for (i,url) in imageUrls.enumerated() {
+            if i < 0 && i >= buttons.count {return}
+            // 使用manager
+            SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+                buttons[i].setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
+        }
+    }
+    
+    //MARK:- Save Data
+    @objc fileprivate func handleSave(){
+        view.endEditing(true)
+        let hud = showWaitingHUD(title: "保存中", detail: "", view: view)
+        saveUserInfoToFirestore(user: currentUser) { (err) in
+            if let err = err {
+                hud.hudShowError(title: "保存失败", detail: err.localizedDescription)
+                return
+            }
+            
+            hud.dismiss()
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 
+    //MARK:- textfields
+    @objc func handleTextFieldTextChange(textField: UITextField){
+        let text = textField.text
+        switch textField.placeholder {
+        case settingsSections[1][0]:
+            currentUser?.name = text
+        case settingsSections[1][1]:
+            currentUser?.profession = text
+        case settingsSections[1][2]:
+            currentUser?.age = Int(text ?? "")
+        case settingsSections[1][4]:
+            currentUser?.caption = text
+        default:
+            break
+        }
+    }
+    
+    //MARK:- select photo
+    //选择了照片之后立马上传到firestore，接着将取回的下载URLappend到user.imageUrls里。
+    //这样点保存的时候就会保存好所有照片的url了
+    fileprivate func setImageForUser(_ selectedImage: UIImage?){
+        let hud = showWaitingHUD(title: "上传照片", detail: "", view: view)
+        uploadImageToFirestore(image: selectedImage ?? UIImage()) { [weak self] (urlString, err)  in
+            if let err = err {
+                hud.hudShowError(title: "上传图片失败", detail: err.localizedDescription)
+                return}
+            guard let imageUrlString = urlString else {return}
+            self?.currentUser?.imageUrls?.append(imageUrlString)
+            hud.hudShowSuccess(title: "图片上传完成", detail: "")
+        }
+    }
 }

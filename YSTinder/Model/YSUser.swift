@@ -33,12 +33,25 @@ struct YSUser: ProducesCardViewModel {
     }
     
     init(dictionary: [String:Any]) {
-        self.name = dictionary["fullName"] as? String
+        self.name = dictionary["name"] as? String
         self.age = dictionary["age"] as? Int
         self.profession = dictionary["profession"] as? String
-        self.imageUrls = [dictionary["imageUrl"] as? String] as? [String]
+        self.imageUrls = dictionary["imageUrls"] as? [String]
         self.city = dictionary["city"] as? String
         self.caption = dictionary["caption"] as? String
         self.uid = dictionary["uid"] as? String
+    }
+    
+    func toUserDictionary() -> [String:Any]{
+        let dic : [String: Any] = [
+            "name": name ?? "",
+            "uid": uid ?? "",
+            "profession": profession ?? "",
+            "age": age ?? 18,
+            "city": city ?? "",
+            "caption": caption ?? "",
+            "imageUrls": imageUrls ?? []
+        ]
+        return dic
     }
 }

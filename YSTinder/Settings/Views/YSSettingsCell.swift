@@ -26,7 +26,6 @@ class YSSettingsCell: UITableViewCell {
     
     let textField: UITextField = {
         let tf = SettingsTextField()
-        tf.placeholder = "输入名字"
         return tf
     }()
     

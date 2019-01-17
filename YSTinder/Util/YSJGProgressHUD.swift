@@ -25,3 +25,18 @@ func showWaitingHUD(title: String, detail: String, view: UIView) -> JGProgressHU
     hud.show(in: view)
     return hud
 }
+
+extension JGProgressHUD{
+    func hudShowError(title: String, detail: String){
+        self.indicatorView = JGProgressHUDErrorIndicatorView()
+        self.textLabel.text = title
+        self.detailTextLabel.text = detail
+        self.dismiss(afterDelay: 3)
+    }
+    func hudShowSuccess(title: String, detail: String){
+        self.indicatorView = JGProgressHUDSuccessIndicatorView()
+        self.textLabel.text = title
+        self.detailTextLabel.text = detail
+        self.dismiss(afterDelay: 1, animated: true)
+    }
+}
