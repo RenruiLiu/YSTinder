@@ -17,6 +17,8 @@ struct YSUser: ProducesCardViewModel {
     var imageUrls: [String]?
     var city: String?
     var caption: String?
+    var minSeekingAge: Int?
+    var maxSeekingAge: Int?
     
     //将一个User中需要展示到View的内容都转成一个ViewModel
     func toCardViewModel() -> YSCardViewModel{
@@ -40,6 +42,8 @@ struct YSUser: ProducesCardViewModel {
         self.city = dictionary["city"] as? String
         self.caption = dictionary["caption"] as? String
         self.uid = dictionary["uid"] as? String
+        self.minSeekingAge = dictionary["minSeekingAge"] as? Int
+        self.maxSeekingAge = dictionary["maxSeekingAge"] as? Int
     }
     
     func toUserDictionary() -> [String:Any]{
@@ -50,7 +54,9 @@ struct YSUser: ProducesCardViewModel {
             "age": age ?? 18,
             "city": city ?? "",
             "caption": caption ?? "",
-            "imageUrls": imageUrls ?? []
+            "imageUrls": imageUrls ?? [],
+            "minSeekingAge": minSeekingAge ?? 18,
+            "maxSeekingAge": maxSeekingAge ?? 80
         ]
         return dic
     }

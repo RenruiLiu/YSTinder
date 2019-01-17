@@ -75,22 +75,26 @@ extension YSSettingsController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = YSSettingsCell(style: .default, reuseIdentifier: nil)
         
+        // 设置年龄slider
+        if indexPath.section == 6 {
+            let ageRangeCell = YSAgeRangeCell(style: .default, reuseIdentifier: nil)
+            ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAgeChange), for: .valueChanged)
+            ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAgeChange), for: .valueChanged)
+            ageRangeCell.setAgeRange(min: currentUser?.minSeekingAge ?? 18, max: currentUser?.maxSeekingAge ?? 80)
+            return ageRangeCell
+        }
+        
+        // 设置其他textfield
+        let cell = YSSettingsCell(style: .default, reuseIdentifier: nil)
         setupCellTextField(indexPath, cell)
         //每行的textfield的placeholder
         cell.textField.placeholder = settingsSections[1][indexPath.section - 1]
 
         return cell
     }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44 
-    }
     
     @objc fileprivate func handleSelectCity(_ textField: YSCustomTextField){
-        cityTextField = textField
-        
         let cityPicker = TLCityPickerController()
         cityPicker.delegate = self
         cityPicker.hotCitys = ["100010000", "200010000", "300210000", "600010000", "300110000"]
@@ -99,7 +103,8 @@ extension YSSettingsController{
     }
     
     func cityPickerController(_ cityPickerViewController: TLCityPickerController!, didSelect city: TLCity!) {
-        cityTextField?.text = city.cityName
+        let cityCell = tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as? YSSettingsCell
+        cityCell?.textField.text = city.cityName
         currentUser?.city = city.cityName
         navigationController?.popViewController(animated: true)
     }

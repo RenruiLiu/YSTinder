@@ -35,6 +35,7 @@
 		7EB3DD2921EF2143000DD6B4 /* TLCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD2121EF213E000DD6B4 /* TLCity.m */; };
 		7EB3DD2A21EF2143000DD6B4 /* CityData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EB3DD2421EF2142000DD6B4 /* CityData.plist */; };
 		7EB3DD2B21EF2143000DD6B4 /* TLCityGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD2521EF2143000DD6B4 /* TLCityGroupCell.m */; };
+		7EB3DD2D21F075F1000DD6B4 /* YSAgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD2C21F075F1000DD6B4 /* YSAgeRangeCell.swift */; };
 		930E95D84E3F27B6107777CF /* Pods_YSTinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C474F8A5D2AC5271D35EC3 /* Pods_YSTinder.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		7EB3DD2321EF2140000DD6B4 /* TLCityGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLCityGroupCell.h; sourceTree = "<group>"; };
 		7EB3DD2421EF2142000DD6B4 /* CityData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CityData.plist; sourceTree = "<group>"; };
 		7EB3DD2521EF2143000DD6B4 /* TLCityGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLCityGroupCell.m; sourceTree = "<group>"; };
+		7EB3DD2C21F075F1000DD6B4 /* YSAgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSAgeRangeCell.swift; sourceTree = "<group>"; };
 		9A0CF00E8739173F750BEDE7 /* Pods-YSTinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YSTinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-YSTinder/Pods-YSTinder.release.xcconfig"; sourceTree = "<group>"; };
 		A4C474F8A5D2AC5271D35EC3 /* Pods_YSTinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YSTinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				7E1FE88221EED5A2007880D9 /* YSSettingsCell.swift */,
+				7EB3DD2C21F075F1000DD6B4 /* YSAgeRangeCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				7E6E594221E8803F00E5DFA4 /* Bindable.swift in Sources */,
 				7E0BA37F21E584810067D792 /* YSHomeController.swift in Sources */,
 				7E0BA39321E597C40067D792 /* YSBottomControlsStackView.swift in Sources */,
+				7EB3DD2D21F075F1000DD6B4 /* YSAgeRangeCell.swift in Sources */,
 				7E0BA3A021E5F80C0067D792 /* YSAdvertiser.swift in Sources */,
 				7E6E593E21E8635B00E5DFA4 /* RegisterationViewModel.swift in Sources */,
 				7E28046221E837B90025F6DC /* YSCustomTextField.swift in Sources */,
