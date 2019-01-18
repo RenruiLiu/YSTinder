@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class YSHomeController : UIViewController {
+class YSHomeController : UIViewController, SettingsControllerDelegate {
 
     //MARK:- Properties
     let topStackView = YSTopNavigationStackView()
@@ -18,24 +18,7 @@ class YSHomeController : UIViewController {
     let bottomStackView = YSBottomControlsStackView()
     var cardViewModels = [YSCardViewModel]()
     
-    //dummy方式设置card
-//    let cardViewModels: [YSCardViewModel] = {
-//        //获取一些身为Model的用户和广告，他们都通过了ProducesCardViewModel这个Protocol
-//        let producers = [
-//            YSUser(name: "Kelly", age: 23, profession: "Music DJ", imageNames: ["kelly1","kelly2","kelly3"],city:"三里屯", caption: "一个随便写的caption"),
-//            YSUser(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1","jane2","jane3"], city:"暹岗村", caption: "一个随便写的caption"),
-//            YSAdvertiser(title: "侧滑栏", brandName: "Lets Build That App", posterPhotoName: "slide_out_menu_poster"),
-//            YSUser(name: "Kelly", age: 23, profession: "Music DJ", imageNames: ["kelly1"],city:"三里屯", caption: "一个随便写的caption"),
-//            YSUser(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1"], city:"暹岗村", caption: "一个随便写的caption"),
-//            YSAdvertiser(title: "侧滑栏", brandName: "Lets Build That App", posterPhotoName: "slide_out_menu_poster")]
-//            as [ProducesCardViewModel]
-//
-//        //将这些Model使用各自定义的toCardViewModel方法转成ViewModel
-//        let viewModels = producers.map({ (vm) -> YSCardViewModel in
-//            return vm.toCardViewModel()
-//        })
-//        return viewModels
-//    }()
+    var currentUser: YSUser?
     
     //MARK:- Life Cycle
     
@@ -83,21 +66,33 @@ class YSHomeController : UIViewController {
     }
     
     @objc fileprivate func handleSettings(){
-        present(UINavigationController(rootViewController: YSSettingsController()), animated: true, completion: nil)
-//        present(YSRegisterationController(),animated: true)
+        let settingsVC = YSSettingsController()
+        settingsVC.currentUser = currentUser
+        settingsVC.delegate = self
+        present(UINavigationController(rootViewController: settingsVC), animated: true, completion: nil)
     }
     
     @objc fileprivate func handleRefresh(){
         fetchUsers_setupCards()
     }
     
+    // 代理方法：当设置完成后，刷新页面获取用户
+    func didSaveSettings() {
+        fetchUsers_setupCards()
+    }
+    
+    //MARK:- 网络
+    //获取currentUser，获取其他卡片，刷新页面
     fileprivate func fetchUsers_setupCards(){
         let refreshingHUD = showWaitingHUD(title: "刷新中", detail: "正在获取新用户", view: view)
         
-        fetchUsersFromFirestore { [weak self] (viewModels) in
-            self?.cardViewModels = viewModels
-            self?.setupCards()
-            refreshingHUD.dismiss(animated: true)
+        fetchCurrentUser { (user) in
+            self.currentUser = user
+            fetchUsersFromFirestore(currentUser: user) { [weak self] (viewModels) in
+                self?.cardViewModels = viewModels
+                self?.setupCards()
+                refreshingHUD.dismiss(animated: true)
+            }
         }
     }
 }

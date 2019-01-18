@@ -18,6 +18,8 @@ class YSCustomImagePickerController: UIImagePickerController {
 class YSSettingsController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TLCityPickerDelegate {    
     
     //MARK:- properties
+    var delegate: SettingsControllerDelegate?
+    
     lazy var imageButton1 = createButton(selector: #selector(handleSelectPhoto))
     lazy var imageButton2 = createButton(selector: #selector(handleSelectPhoto))
     lazy var imageButton3 = createButton(selector: #selector(handleSelectPhoto))
@@ -30,7 +32,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
         setupLayout()
         setupNavigationBar()
         tableView.keyboardDismissMode = .interactive
-        deployCurrentUser()
+//        deployCurrentUser()
     }
     
     //MARK:- nav bar
@@ -107,15 +109,20 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
     }
     
     //MARK:- Load User
-    var currentUser: YSUser?
-    
-    fileprivate func deployCurrentUser(){
-        fetchCurrentUser { [weak self] (user) in
-            self?.currentUser = user
-            self?.tableView.reloadData()
-            self?.loadUserPhotos()
+    var currentUser: YSUser? {
+        didSet{
+            tableView.reloadData()
+            loadUserPhotos()
         }
     }
+    
+//    fileprivate func deployCurrentUser(){
+//        fetchCurrentUser { [weak self] (user) in
+//            self?.currentUser = user
+//            self?.tableView.reloadData()
+//            self?.loadUserPhotos()
+//        }
+//    }
     
     fileprivate func loadUserPhotos(){
         var imageUrls = [] as [URL]
@@ -205,6 +212,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
     }
     
     //MARK:- Save Data
+    //TODO:- 用户保存后，刷新主页
     @objc fileprivate func handleSave(){
         view.endEditing(true)
         let hud = showWaitingHUD(title: "保存中", detail: "", view: view)
@@ -215,7 +223,9 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
             }
             
             hud.dismiss()
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: {
+                self.delegate?.didSaveSettings()
+            })
         }
     }
     

@@ -10,6 +10,8 @@ import Foundation
 import Firebase
 import Reachability
 
+
+
 //注册流程：检查表单是否合规 - 注册邮箱密码 - 存照片到storage - 获取照片url - 将key pair存进Firestore
 
 extension RegisterationViewModel {
@@ -39,6 +41,7 @@ extension RegisterationViewModel {
         }
     }
     
+    //将注册的照片存进firestore后又把imageURL存起来
     func saveImageToFirebase(completion: @escaping (Error?) -> ()){
         // 存照片
         guard let imageData = self.bindableImage.value else {return}
@@ -55,6 +58,7 @@ extension RegisterationViewModel {
         }
     }
     
+    //保存注册信息到firestore
     func saveInfoToFirestore(imageUrl: String, completion: @escaping (Error?) -> ()){
         
         let uid = Auth.auth().currentUser?.uid ?? ""
@@ -72,16 +76,46 @@ extension RegisterationViewModel {
 
 fileprivate var lastFetchedUser: YSUser?
 
-func fetchUsersFromFirestore(completion: @escaping ([YSCardViewModel]) -> ()){
-    let query = Firestore.firestore().collection("users")
+// 分页fetch用户
     
     // whereField：范围筛选 18~30岁的用户，只可以在同一个filed内筛选
     // 还可以 arrayContains 筛选 一个array Field中包含了 某元素的 成员
-//    query.whereField("age", isLessThan: 30).whereField("age", isGreaterThan: 18)
+    //    query.whereField("age", isLessThan: 30).whereField("age", isGreaterThan: 18)
     
     // pagination：根据uid的order，每次3个
-    let filteredQuery = query.order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 3)
-        filteredQuery.getDocuments { (snapshot, err) in
+    //    .order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""])
+
+var nextQuery: Query?
+
+fileprivate func queryFilter(currentUser: YSUser) -> Query{
+    
+    let db = Firestore.firestore()
+    guard let minAge = currentUser.minSeekingAge,
+        let maxAge = currentUser.maxSeekingAge else {return db.collection("users")}
+    
+    var query: Query?
+    //如果不是第一次查询，有nextQuery，则本次query = nextQuery
+    if nextQuery != nil {
+        query = nextQuery
+    } else {
+        //如果是第一次query，则新建一个query
+        query = db.collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge).limit(to: Constants.limitOfFetchUsers)
+    }
+    //从本次query开始，建立下一次query，并赋值给nextQuery
+    query?.addSnapshotListener { (snapshot, err) in
+        guard let lastSnapshot = snapshot?.documents.last else {return}
+        let next = db.collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge).start(afterDocument: lastSnapshot).limit(to: Constants.limitOfFetchUsers)
+        nextQuery = next
+    }
+    
+    return query!
+}
+
+func fetchUsersFromFirestore(currentUser: YSUser ,completion: @escaping ([YSCardViewModel]) -> ()){
+    let filteredQuery = queryFilter(currentUser: currentUser)
+
+    //开始查询
+    filteredQuery.getDocuments { (snapshot, err) in
         if let err = err {
             print("Failed to fetch users:",err)
             return
@@ -101,6 +135,7 @@ func fetchUsersFromFirestore(completion: @escaping ([YSCardViewModel]) -> ()){
     }
 }
 
+//获取当前用户
 func fetchCurrentUser(completion: @escaping (YSUser) -> ()) {
     guard let uid = Auth.auth().currentUser?.uid else {return}
     Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
@@ -116,6 +151,7 @@ func fetchCurrentUser(completion: @escaping (YSUser) -> ()) {
     }
 }
 
+//在设置中保存用户信息
 func saveUserInfoToFirestore (user: YSUser?, completion:@escaping ((Error?)->())){
     guard let user = user else {return}
     guard let uid = user.uid else {return}
@@ -138,8 +174,8 @@ func saveUserInfoToFirestore (user: YSUser?, completion:@escaping ((Error?)->())
     }
 }
 
+//检查网络，没网时返回err
 func checkNetworkConnection() -> Error?{
-    //检查网络，没网时返回err
     let reachability = Reachability()!
     if reachability.connection == .none {
         let err = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey:"没有网络连接，请检查网络设置"])
