@@ -118,6 +118,19 @@ class YSRegisterationController: UIViewController {
         return vsv
     }()
     
+    let goToLoginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("我有账号了，去登陆", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        button.addTarget(self, action: #selector(handleGoToLogin), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc fileprivate func handleGoToLogin(){
+        navigationController?.popViewController(animated: true)
+    }
+    
     @objc fileprivate func handleSelectPhoto(){
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -136,19 +149,22 @@ class YSRegisterationController: UIViewController {
     }
     
     fileprivate func setupLayout() {
+        navigationController?.isNavigationBarHidden = true
+        
         view.addSubview(overallStackView)
         overallStackView.axis = .vertical
         overallStackView.spacing = 8
         overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         overallStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50))
+        
+        view.addSubview(goToLoginButton)
+        goToLoginButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
     
     let gradientLayer = CAGradientLayer()
     
     fileprivate func setupGradientLayer(){
-        let topColor = #colorLiteral(red: 0.9927458167, green: 0.3810226917, blue: 0.3745030165, alpha: 1)
-        let bottomColor = #colorLiteral(red: 0.8867512941, green: 0.1122735515, blue: 0.4637197256, alpha: 1)
-        gradientLayer.colors = [topColor.cgColor,bottomColor.cgColor]
+        gradientLayer.colors = [Constants.gradientTopColor.cgColor,Constants.gradientBottomColor.cgColor]
         gradientLayer.locations = [0,1]
         view.layer.addSublayer(gradientLayer)
     }
@@ -183,14 +199,7 @@ class YSRegisterationController: UIViewController {
     }
     
     //MARK:- Registeration
-    let registeringHUD = JGProgressHUD(style: .dark)
-    
-    fileprivate func showSuccessHUD() {
-        self.registeringHUD.indicatorView = JGProgressHUDSuccessIndicatorView()
-        self.registeringHUD.detailTextLabel.text = ""
-        self.registeringHUD.textLabel.text = "注册成功"
-        self.registeringHUD.dismiss(afterDelay: 1, animated: true)
-    }
+    var registeringHUD = JGProgressHUD(style: .dark)
     
     @objc fileprivate func handleRegister(){
         //收键盘
@@ -201,9 +210,10 @@ class YSRegisterationController: UIViewController {
             if let err = err {
                 showErrorHUD(title: "注册失败", detail: err.localizedDescription, view: self.view)
                 return
-            } else {
-                self.showSuccessHUD()
             }
+            
+            self.registeringHUD.dismiss()
+            self.dismiss(animated: true)
         }
     }
     
@@ -230,8 +240,7 @@ class YSRegisterationController: UIViewController {
         
         registeraionViewModel.bindableIsRegistering.bind { [unowned self] (isRegistering) in
             if isRegistering == true {
-                self.registeringHUD.textLabel.text = "注册中"
-                self.registeringHUD.show(in: self.view)
+                self.registeringHUD = showWaitingHUD(title: "注册中", detail: "", view: self.view)
             } else {
                 self.registeringHUD.dismiss(animated: true)
             }

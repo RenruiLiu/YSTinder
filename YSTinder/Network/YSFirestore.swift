@@ -211,3 +211,13 @@ func uploadImageToFirestore(image: UIImage, completion: @escaping (String?, Erro
         })
     })
 }
+
+func logout(){
+    try? Auth.auth().signOut()
+}
+
+func loginUser(WithEmail email: String, password: String, completion:@escaping (Error?)->()){
+    Auth.auth().signIn(withEmail: email, password: password) { (res, err) in
+        completion(err)
+    }
+}

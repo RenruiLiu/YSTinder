@@ -38,6 +38,9 @@
 		7EB3DD2D21F075F1000DD6B4 /* YSAgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD2C21F075F1000DD6B4 /* YSAgeRangeCell.swift */; };
 		7EB3DD2F21F172E7000DD6B4 /* SettingsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD2E21F172E7000DD6B4 /* SettingsControllerDelegate.swift */; };
 		7EB3DD3121F1A9E9000DD6B4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD3021F1A9E9000DD6B4 /* Constants.swift */; };
+		7EB3DD3321F1BEF2000DD6B4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD3221F1BEF2000DD6B4 /* LoginViewModel.swift */; };
+		7EB3DD3521F1C15D000DD6B4 /* YSLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD3421F1C15D000DD6B4 /* YSLoginController.swift */; };
+		7EB3DD3721F1D307000DD6B4 /* SecretLoginAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD3621F1D307000DD6B4 /* SecretLoginAccount.swift */; };
 		930E95D84E3F27B6107777CF /* Pods_YSTinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C474F8A5D2AC5271D35EC3 /* Pods_YSTinder.framework */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +86,9 @@
 		7EB3DD2C21F075F1000DD6B4 /* YSAgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSAgeRangeCell.swift; sourceTree = "<group>"; };
 		7EB3DD2E21F172E7000DD6B4 /* SettingsControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControllerDelegate.swift; sourceTree = "<group>"; };
 		7EB3DD3021F1A9E9000DD6B4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7EB3DD3221F1BEF2000DD6B4 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		7EB3DD3421F1C15D000DD6B4 /* YSLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSLoginController.swift; sourceTree = "<group>"; };
+		7EB3DD3621F1D307000DD6B4 /* SecretLoginAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretLoginAccount.swift; sourceTree = "<group>"; };
 		9A0CF00E8739173F750BEDE7 /* Pods-YSTinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YSTinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-YSTinder/Pods-YSTinder.release.xcconfig"; sourceTree = "<group>"; };
 		A4C474F8A5D2AC5271D35EC3 /* Pods_YSTinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YSTinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -233,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				7E28045F21E82DA70025F6DC /* YSRegisterationController.swift */,
+				7EB3DD3421F1C15D000DD6B4 /* YSLoginController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -248,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				7E6E593D21E8635B00E5DFA4 /* RegisterationViewModel.swift */,
+				7EB3DD3221F1BEF2000DD6B4 /* LoginViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -268,6 +276,7 @@
 				7E6E594121E8803F00E5DFA4 /* Bindable.swift */,
 				7E6E594421E8888600E5DFA4 /* YSJGProgressHUD.swift */,
 				7EB3DD3021F1A9E9000DD6B4 /* Constants.swift */,
+				7EB3DD3621F1D307000DD6B4 /* SecretLoginAccount.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -483,6 +492,7 @@
 				7EB3DD2D21F075F1000DD6B4 /* YSAgeRangeCell.swift in Sources */,
 				7EB3DD2F21F172E7000DD6B4 /* SettingsControllerDelegate.swift in Sources */,
 				7EB3DD3121F1A9E9000DD6B4 /* Constants.swift in Sources */,
+				7EB3DD3321F1BEF2000DD6B4 /* LoginViewModel.swift in Sources */,
 				7E0BA3A021E5F80C0067D792 /* YSAdvertiser.swift in Sources */,
 				7E6E593E21E8635B00E5DFA4 /* RegisterationViewModel.swift in Sources */,
 				7E28046221E837B90025F6DC /* YSCustomTextField.swift in Sources */,
@@ -493,8 +503,10 @@
 				7E6E594521E8888600E5DFA4 /* YSJGProgressHUD.swift in Sources */,
 				7E1FE87A21ED76F2007880D9 /* YSFirestore.swift in Sources */,
 				7EB3DD2821EF2143000DD6B4 /* TLCityPickerSearchResultController.m in Sources */,
+				7EB3DD3521F1C15D000DD6B4 /* YSLoginController.swift in Sources */,
 				7E28046021E82DA70025F6DC /* YSRegisterationController.swift in Sources */,
 				7E1FE88321EED5A2007880D9 /* YSSettingsCell.swift in Sources */,
+				7EB3DD3721F1D307000DD6B4 /* SecretLoginAccount.swift in Sources */,
 				7EB3DD2721EF2143000DD6B4 /* TLCityHeaderView.m in Sources */,
 				7E0BA39021E58D700067D792 /* Extensions+UIView.swift in Sources */,
 				7E0BA39E21E5E6370067D792 /* YSCardViewModel.swift in Sources */,

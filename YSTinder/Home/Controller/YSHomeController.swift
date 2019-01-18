@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class YSHomeController : UIViewController, SettingsControllerDelegate {
+class YSHomeController : UIViewController, SettingsControllerDelegate, LoginControllerDelegate {
 
     //MARK:- Properties
     let topStackView = YSTopNavigationStackView()
@@ -27,7 +27,22 @@ class YSHomeController : UIViewController, SettingsControllerDelegate {
         
         setupLayout()
         setupButtons()
-        fetchUsers_setupCards()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //如果没有登录，跳转到注册页面
+        if Auth.auth().currentUser == nil {
+            navToLoginController()
+        }
+    }
+    
+    fileprivate func navToLoginController() {
+        let loginController = YSLoginController()
+        loginController.delegate = self
+        let navController = UINavigationController(rootViewController: loginController)
+        present(navController, animated: true, completion: nil)
     }
 
     //MARK:- UI
@@ -36,9 +51,6 @@ class YSHomeController : UIViewController, SettingsControllerDelegate {
             let cardView = YSCardView(frame: .zero)
             cardView.cardViewModel = cardVM
             cardsDeckView.insertSubview(cardView, at: 0)
-            //将新加入的卡放到最后面
-//            cardsDeckView.addSubview(cardView)
-//            cardsDeckView.sendSubviewToBack(cardView)
             cardView.fillSuperview()
         }
     }
@@ -94,5 +106,10 @@ class YSHomeController : UIViewController, SettingsControllerDelegate {
                 refreshingHUD.dismiss(animated: true)
             }
         }
+    }
+    
+    // 完成login后，fetch用户fetch卡片
+    func didFinishLogin(){
+        fetchUsers_setupCards()
     }
 }

@@ -233,7 +233,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
     @objc fileprivate func handleLogout(){
         //logout
         //present login
+        logout()
+        dismiss(animated: true, completion: nil)
     }
-    
-    
 }
