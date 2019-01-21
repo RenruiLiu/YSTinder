@@ -11,7 +11,7 @@ import AudioToolbox
 import SDWebImage
 
 protocol CardViewDelegate {
-    func didTapMoreInfoBtn()
+    func didTapMoreInfoBtn(cardViewModel: YSCardViewModel)
 }
 
 class YSCardView: UIView {
@@ -27,7 +27,6 @@ class YSCardView: UIView {
     fileprivate let shouldDismissCardThreshold: CGFloat = 100
     fileprivate let imageView = UIImageView()
     fileprivate let informationLabel = UILabel()
-    fileprivate let barDeselectedColor: UIColor = UIColor(white: 0, alpha: 0.1)
     fileprivate let moreInfoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "info_icon").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -52,7 +51,7 @@ class YSCardView: UIView {
                 
                 //set bars to the right color
                 self?.barsStackView.arrangedSubviews.forEach {(bar) in
-                    bar.backgroundColor = self?.barDeselectedColor
+                    bar.backgroundColor = Constants.barDeselectedColor
                 }
                 self?.barsStackView.arrangedSubviews[index].backgroundColor = .white
                 
@@ -109,6 +108,7 @@ class YSCardView: UIView {
     fileprivate let barsStackView = UIStackView()
     fileprivate func setupBarsStackView(){
         addSubview(barsStackView)
+        barsStackView.layer.cornerRadius = 2
         barsStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 8, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 4))
         barsStackView.spacing = 4
         barsStackView.distribution = .fillEqually
@@ -164,7 +164,7 @@ class YSCardView: UIView {
     
     //点击moreInfo 按钮
     @objc fileprivate func handleMoreInfo(){
-        delegate?.didTapMoreInfoBtn()
+        delegate?.didTapMoreInfoBtn(cardViewModel: cardViewModel)
     }
 
     //拖拽

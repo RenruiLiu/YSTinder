@@ -42,6 +42,7 @@
 		7EB3DD3521F1C15D000DD6B4 /* YSLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD3421F1C15D000DD6B4 /* YSLoginController.swift */; };
 		7EB3DD3721F1D307000DD6B4 /* SecretLoginAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB3DD3621F1D307000DD6B4 /* SecretLoginAccount.swift */; };
 		7EF7C18821F57CE000AF434C /* YSUserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7C18721F57CE000AF434C /* YSUserDetailsViewController.swift */; };
+		7EF7C18C21F5A91C00AF434C /* YSSwipingPhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF7C18B21F5A91C00AF434C /* YSSwipingPhotoController.swift */; };
 		930E95D84E3F27B6107777CF /* Pods_YSTinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C474F8A5D2AC5271D35EC3 /* Pods_YSTinder.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,7 @@
 		7EB3DD3421F1C15D000DD6B4 /* YSLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSLoginController.swift; sourceTree = "<group>"; };
 		7EB3DD3621F1D307000DD6B4 /* SecretLoginAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretLoginAccount.swift; sourceTree = "<group>"; };
 		7EF7C18721F57CE000AF434C /* YSUserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSUserDetailsViewController.swift; sourceTree = "<group>"; };
+		7EF7C18B21F5A91C00AF434C /* YSSwipingPhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YSSwipingPhotoController.swift; sourceTree = "<group>"; };
 		9A0CF00E8739173F750BEDE7 /* Pods-YSTinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YSTinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-YSTinder/Pods-YSTinder.release.xcconfig"; sourceTree = "<group>"; };
 		A4C474F8A5D2AC5271D35EC3 /* Pods_YSTinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YSTinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -315,9 +317,26 @@
 		7EF7C18621F57CC400AF434C /* User Details */ = {
 			isa = PBXGroup;
 			children = (
-				7EF7C18721F57CE000AF434C /* YSUserDetailsViewController.swift */,
+				7EF7C18A21F5A8EB00AF434C /* Controller */,
+				7EF7C18921F5A8E200AF434C /* View */,
 			);
 			path = "User Details";
+			sourceTree = "<group>";
+		};
+		7EF7C18921F5A8E200AF434C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7EF7C18B21F5A91C00AF434C /* YSSwipingPhotoController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7EF7C18A21F5A8EB00AF434C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7EF7C18721F57CE000AF434C /* YSUserDetailsViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		A6B4CA4479CED9E8A777E448 /* Frameworks */ = {
@@ -498,6 +517,7 @@
 				7EB3DD2621EF2143000DD6B4 /* TLCityPickerController.m in Sources */,
 				7EB3DD2B21EF2143000DD6B4 /* TLCityGroupCell.m in Sources */,
 				7E6E594221E8803F00E5DFA4 /* Bindable.swift in Sources */,
+				7EF7C18C21F5A91C00AF434C /* YSSwipingPhotoController.swift in Sources */,
 				7E0BA37F21E584810067D792 /* YSHomeController.swift in Sources */,
 				7E0BA39321E597C40067D792 /* YSBottomControlsStackView.swift in Sources */,
 				7EB3DD2D21F075F1000DD6B4 /* YSAgeRangeCell.swift in Sources */,

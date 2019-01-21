@@ -91,10 +91,9 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
     }
     
     // 更多信息页面
-    func didTapMoreInfoBtn() {
+    func didTapMoreInfoBtn(cardViewModel: YSCardViewModel) {
         let userDetailController = YSUserDetailsViewController()
-        // 展示这张卡片的用户信息
-        userDetailController.thisUser = currentUser
+        userDetailController.cardViewModel = cardViewModel
         present(userDetailController, animated: true, completion: nil)
     }
     
