@@ -125,8 +125,12 @@ func fetchUsersFromFirestore(currentUser: YSUser ,completion: @escaping ([YSCard
         snapshot?.documents.forEach({ (documentSnapshot) in
             let userDictionary = documentSnapshot.data()
             let user = YSUser(dictionary: userDictionary)
-            cardViewModels.append(user.toCardViewModel())
-            lastFetchedUser = user
+            
+            // 一个过滤掉自己的filter: 不让自己出现在首页
+            if user.uid != currentUser.uid {
+                cardViewModels.append(user.toCardViewModel())
+                lastFetchedUser = user
+            }
         })
             
         print("加载了", cardViewModels.count,"个用户，最后一位的名字是：",lastFetchedUser?.name ?? "none")

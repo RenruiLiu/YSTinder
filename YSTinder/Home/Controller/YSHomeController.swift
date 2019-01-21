@@ -10,8 +10,8 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class YSHomeController : UIViewController, SettingsControllerDelegate, LoginControllerDelegate {
-
+class YSHomeController : UIViewController, SettingsControllerDelegate, LoginControllerDelegate, CardViewDelegate {
+    
     //MARK:- Properties
     let topStackView = YSTopNavigationStackView()
     let cardsDeckView = UIView()
@@ -50,6 +50,7 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
     fileprivate func setupCards(){
         for (_,cardVM) in cardViewModels.enumerated() {
             let cardView = YSCardView(frame: .zero)
+            cardView.delegate = self
             cardView.cardViewModel = cardVM
             cardsDeckView.insertSubview(cardView, at: 0)
             cardView.fillSuperview()
@@ -87,6 +88,14 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
     
     @objc fileprivate func handleRefresh(){
         fetchUsers_setupCards()
+    }
+    
+    // 更多信息页面
+    func didTapMoreInfoBtn() {
+        let userDetailController = YSUserDetailsViewController()
+        // 展示这张卡片的用户信息
+        userDetailController.thisUser = currentUser
+        present(userDetailController, animated: true, completion: nil)
     }
     
     // 代理方法：当设置完成后，刷新页面获取用户

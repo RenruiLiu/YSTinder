@@ -10,6 +10,10 @@ import UIKit
 import AudioToolbox
 import SDWebImage
 
+protocol CardViewDelegate {
+    func didTapMoreInfoBtn()
+}
+
 class YSCardView: UIView {
 
     //MARK:- Properties
@@ -24,6 +28,14 @@ class YSCardView: UIView {
     fileprivate let imageView = UIImageView()
     fileprivate let informationLabel = UILabel()
     fileprivate let barDeselectedColor: UIColor = UIColor(white: 0, alpha: 0.1)
+    fileprivate let moreInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "info_icon").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
+        return button
+    }()
+    var delegate: CardViewDelegate?
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,6 +88,11 @@ class YSCardView: UIView {
         informationLabel.numberOfLines = 0
     }
     
+    fileprivate func setupMoreInfoBtn(){
+        addSubview(moreInfoButton)
+        moreInfoButton.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 16, right: 16), size: .init(width: 44, height: 44))
+    }
+    
     fileprivate func setupLayout() {
         layer.cornerRadius = 10
         clipsToBounds = true
@@ -85,6 +102,7 @@ class YSCardView: UIView {
         setupGradientLayerOnImageView() //添加底部阴影, 位于图片之上，Information之下
         setupInformationLabel()
         setupBarsStackView()
+        setupMoreInfoBtn()
     }
     
     //顶部的图片bar
@@ -142,6 +160,11 @@ class YSCardView: UIView {
         } else {
             cardViewModel.goToPreviousPhoto()
         }
+    }
+    
+    //点击moreInfo 按钮
+    @objc fileprivate func handleMoreInfo(){
+        delegate?.didTapMoreInfoBtn()
     }
 
     //拖拽
