@@ -32,7 +32,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
         setupLayout()
         setupNavigationBar()
         tableView.keyboardDismissMode = .interactive
-//        deployCurrentUser()
+        loadUserPhotos()
     }
     
     //MARK:- nav bar
@@ -77,6 +77,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
         dismiss(animated: true, completion: nil)
     }
     
+    //MARK:- 选择照片
     fileprivate func createButton(selector: Selector) -> UIButton{
         let button = UIButton(type: .system)
         button.setTitle("选择照片", for: .normal)
@@ -88,7 +89,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
         button.imageView?.image?.withRenderingMode(.alwaysOriginal)
         return button
     }
-    
+
     @objc fileprivate func handleSelectPhoto(button: UIButton){
         let imagePicker = YSCustomImagePickerController()
         imagePicker.imageButton = button
@@ -109,20 +110,7 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
     }
     
     //MARK:- Load User
-    var currentUser: YSUser? {
-        didSet{
-            tableView.reloadData()
-            loadUserPhotos()
-        }
-    }
-    
-//    fileprivate func deployCurrentUser(){
-//        fetchCurrentUser { [weak self] (user) in
-//            self?.currentUser = user
-//            self?.tableView.reloadData()
-//            self?.loadUserPhotos()
-//        }
-//    }
+    var currentUser: YSUser?
     
     fileprivate func loadUserPhotos(){
         var imageUrls = [] as [URL]
@@ -188,15 +176,18 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
     //这样点保存的时候就会保存好所有照片的url了
     fileprivate func setImageForUser(_ selectedImage: UIImage?, onButton button: UIButton?){
         let hud = showWaitingHUD(title: "上传照片", detail: "", view: view)
+        
+        //上传到firestore并获取下载url
         uploadImageToFirestore(image: selectedImage ?? UIImage()) { [weak self] (urlString, err)  in
             if let err = err {
                 hud.hudShowError(title: "上传图片失败", detail: err.localizedDescription)
                 return}
             guard let imageUrlString = urlString else {return}
             
+            //如果已有照片小于3，则加上。如果等于3，则替换。
             guard var urls = self?.currentUser?.imageUrls else {return}
             if urls.count < 3 {
-                self?.currentUser?.imageUrls?.append(imageUrlString)
+                urls.append(imageUrlString)
             } else {
                 if button == self?.imageButton1 {
                     urls[0] = imageUrlString
@@ -212,7 +203,6 @@ class YSSettingsController: UITableViewController, UIImagePickerControllerDelega
     }
     
     //MARK:- Save Data
-    //TODO:- 用户保存后，刷新主页
     @objc fileprivate func handleSave(){
         view.endEditing(true)
         let hud = showWaitingHUD(title: "保存中", detail: "", view: view)

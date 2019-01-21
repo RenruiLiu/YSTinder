@@ -25,6 +25,7 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fetchUsers_setupCards()
         setupLayout()
         setupButtons()
     }

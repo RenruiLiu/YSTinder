@@ -17,3 +17,5 @@ YSTinder is licensed under [MIT](https://github.com/RenruiLiu/YSTinder/blob/mast
 6. - [ ] 修改密码
 7. - [x] 移动登陆View的位置 + tap dismiss键盘
 8. - [x] 注册成功后，刷新home
+8. - [x] 设置页面textfield随便输入什么都dismiss键盘
+8. - [x] 不能保存设置页面多张照片了
