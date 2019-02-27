@@ -14,18 +14,18 @@ protocol CardViewDelegate {
     func didTapMoreInfoBtn(cardViewModel: YSCardViewModel)
 }
 
-class YSCardView: UIView {
+class YSCardView: UIView, YSSwipingPhotoControllerDelegate {
 
     //MARK:- Properties
     var cardViewModel: YSCardViewModel!{
         didSet{
             didSetCardViewModel()
-            setupImageIndexObserver()
         }
     }
     
     fileprivate let shouldDismissCardThreshold: CGFloat = 100
-    fileprivate let imageView = UIImageView()
+    var delegate: CardViewDelegate?
+    
     fileprivate let informationLabel = UILabel()
     fileprivate let moreInfoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -33,50 +33,35 @@ class YSCardView: UIView {
         button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
         return button
     }()
-    var delegate: CardViewDelegate?
     
+    //
+    fileprivate let swipingPhotosController = YSSwipingPhotoController(isCardViewMode: true)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
     }
     
-    //MARK:- 对index的React编程
-    fileprivate func setupImageIndexObserver(){
-        //view的点击事件触发index改变，传到viewModel，viewModel又通过observer通知view改变图片
-        //通过index改变图片和bar
-        cardViewModel.imageIndexObserver = { [weak self] (index, imageUrlStr) in
-            if let url = URL(string: imageUrlStr){
-                self?.imageView.sd_setImage(with: url, completed: nil)
-                
-                //set bars to the right color
-                self?.barsStackView.arrangedSubviews.forEach {(bar) in
-                    bar.backgroundColor = Constants.barDeselectedColor
-                }
-                self?.barsStackView.arrangedSubviews[index].backgroundColor = .white
-                
-                if index > 0 {
-                    self?.informationLabel.attributedText = self?.cardViewModel.captionString
-                } else {
-                    self?.informationLabel.attributedText = self?.cardViewModel.attributedString
-                }
-            }
+    //根据index改变当前个性签名的文字
+    func didChangeIndex(_ index: Int) {
+        print("didChange:",index)
+        if index > 0 {
+            informationLabel.attributedText = cardViewModel.captionString
+        } else {
+            informationLabel.attributedText = cardViewModel.attributedString
         }
     }
     
     //MARK:- Layout
     
     fileprivate func didSetCardViewModel() {
-        let imageUrlStr = cardViewModel.imageUrls.first ?? ""
-//        imageView.image = UIImage(named: imageName)
-        
-        if let imageUrl = URL(string: imageUrlStr) {
-            imageView.sd_setImage(with: imageUrl, completed: nil)
-        }
+        swipingPhotosController.cardViewModel = self.cardViewModel
+        //通过获取它实例的indexDelegate来正式获得他的代理方法，否则实现代理方法不被调用
+        swipingPhotosController.indexDelegate = self
         
         informationLabel.attributedText = cardViewModel.attributedString
         informationLabel.textAlignment = cardViewModel.textAlignment
-        setupBars()
+//        setupBars()
     }
     
     fileprivate func setupInformationLabel(){
@@ -124,9 +109,10 @@ class YSCardView: UIView {
     }
     
     fileprivate func setupImageView() {
-        imageView.contentMode = .scaleAspectFill
-        addSubview(imageView)
-        imageView.fillSuperview()
+        let swipingPhotosView = swipingPhotosController.view!
+        swipingPhotosView.contentMode = .scaleAspectFill
+        addSubview(swipingPhotosView)
+        swipingPhotosView.fillSuperview()
     }
     
     //底部的梯度阴影
@@ -148,7 +134,7 @@ class YSCardView: UIView {
     fileprivate func addGestureToCardView(){
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
         addGestureRecognizer(panGesture)
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapGesture)))
+//        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapGesture)))
     }
     
     //点击

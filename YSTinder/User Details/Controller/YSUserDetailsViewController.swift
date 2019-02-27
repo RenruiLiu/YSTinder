@@ -27,7 +27,7 @@ class YSUserDetailsViewController: UIViewController, UIScrollViewDelegate {
         return sv
     }()
 
-    let swipingPhotosController = YSSwipingPhotoController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+    let swipingPhotosController = YSSwipingPhotoController()
     
     let infoLabel: UILabel = {
         let label = UILabel()

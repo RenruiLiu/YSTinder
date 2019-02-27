@@ -250,7 +250,9 @@ class YSRegisterationController: UIViewController {
 
 extension YSRegisterationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
         registeraionViewModel.bindableImage.value = info[.originalImage] as? UIImage
+        registeraionViewModel.checkIsFormValid()
         dismiss(animated: true, completion: nil)
     }
     

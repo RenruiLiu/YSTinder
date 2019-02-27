@@ -18,10 +18,11 @@ extension RegisterationViewModel {
     
     // 检查form的结果通过isFormValidObserver传给view
     func checkIsFormValid(){
-        let isFormValid = name?.isEmpty == false && password?.isEmpty == false && email?.isEmpty == false
+        let isFormValid = name?.isEmpty == false && password?.isEmpty == false && email?.isEmpty == false && bindableImage.value != nil
         bindableIsFormValid.value = isFormValid
     }
     
+    // 注册
     func performRegisteration(completion: @escaping (Error?) -> ()) {
         
         bindableIsRegistering.value = true
@@ -62,7 +63,14 @@ extension RegisterationViewModel {
     func saveInfoToFirestore(imageUrl: String, completion: @escaping (Error?) -> ()){
         
         let uid = Auth.auth().currentUser?.uid ?? ""
-        let docData = ["name": name ?? "", "uid": uid, "imageUrls": [imageUrl]] as [String : Any]
+        let docData : [String : Any] = [
+            "name": name ?? "",
+            "uid": uid,
+            "imageUrls": [imageUrl],
+            "age":Constants.defaultAge,
+            "minSeekingAge": Constants.defaultMinSeekingAge,
+            "maxSeekingAge": Constants.defaultMaxSeekingAge
+            ]
         Firestore.firestore().collection("users").document(uid).setData(docData) { (err) in
             
             if let err = err {
@@ -73,6 +81,7 @@ extension RegisterationViewModel {
         }
     }
 }
+
 
 fileprivate var lastFetchedUser: YSUser?
 
@@ -91,7 +100,10 @@ fileprivate func queryFilter(currentUser: YSUser) -> Query{
     
     let db = Firestore.firestore()
     guard let minAge = currentUser.minSeekingAge,
-        let maxAge = currentUser.maxSeekingAge else {return db.collection("users")}
+        let maxAge = currentUser.maxSeekingAge else {
+            //如果没有最大最小值，则显示全部的user
+            return db.collection("users")
+    }
     
     var query: Query?
     //如果不是第一次查询，有nextQuery，则本次query = nextQuery
