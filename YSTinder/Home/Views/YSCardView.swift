@@ -12,6 +12,7 @@ import SDWebImage
 
 protocol CardViewDelegate {
     func didTapMoreInfoBtn(cardViewModel: YSCardViewModel)
+    func didRemoveCard(cardView: YSCardView)
 }
 
 class YSCardView: UIView, YSSwipingPhotoControllerDelegate {
@@ -22,6 +23,8 @@ class YSCardView: UIView, YSSwipingPhotoControllerDelegate {
             didSetCardViewModel()
         }
     }
+    
+    var nextCardView: YSCardView?
     
     fileprivate let shouldDismissCardThreshold: CGFloat = 100
     var delegate: CardViewDelegate?
@@ -201,9 +204,9 @@ class YSCardView: UIView, YSSwipingPhotoControllerDelegate {
             self.transform = .identity
             
             if shouldLike {
-                self.removeFromSuperview()
+                self.delegate?.didRemoveCard(cardView: self)
             } else if shouldNope {
-                self.removeFromSuperview()
+                self.delegate?.didRemoveCard(cardView: self)
             }
         })
     }

@@ -27,7 +27,7 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
         
         fetchUsers_setupCards()
         setupLayout()
-        setupButtons()
+        setupBottomButtons()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,12 +48,21 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
 
     //MARK:- UI
     fileprivate func setupCards(){
+        var prevCardView: YSCardView?
+        
         for (_,cardVM) in cardViewModels.enumerated() {
             let cardView = YSCardView(frame: .zero)
             cardView.delegate = self
             cardView.cardViewModel = cardVM
             cardsDeckView.insertSubview(cardView, at: 0)
             cardView.fillSuperview()
+            
+            //给每个卡都赋值给上一张卡的nextCardView属性
+            prevCardView?.nextCardView = cardView
+            prevCardView = cardView
+            if self.topCardView == nil {
+                self.topCardView = cardView
+            }
         }
     }
     
@@ -74,9 +83,56 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
     }
 
     //MARK:- Button
-    fileprivate func setupButtons() {
+    fileprivate func setupBottomButtons() {
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         bottomStackView.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
+        bottomStackView.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
+        bottomStackView.dislikeButton.addTarget(self, action: #selector(handleDislike), for: .touchUpInside)
+    }
+    
+    var topCardView: YSCardView?
+    
+    //点击不喜欢按钮
+    @objc fileprivate func handleDislike(){
+        animateRemoveCard(toLike: false)
+    }
+    //点击喜欢按钮
+    @objc fileprivate func handleLike(){
+        animateRemoveCard(toLike: true)
+    }
+    
+    fileprivate func animateRemoveCard(toLike like: Bool){
+        let duration = 0.5
+        let delta : CGFloat = like ? 1 : -1 //决定向左或右边
+        
+        let translationAnimation = CABasicAnimation(keyPath: "position.x")
+        translationAnimation.toValue = delta * 700
+        translationAnimation.duration = duration
+        translationAnimation.fillMode = .forwards
+        translationAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        translationAnimation.isRemovedOnCompletion = false
+        
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotationAnimation.toValue = delta * 15 * CGFloat.pi / 180
+        rotationAnimation.duration = duration
+        
+        //在点击（还未开始动画时就已经）把下一张卡赋值到最上卡
+        let cardView = topCardView
+        topCardView = cardView?.nextCardView
+        
+        CATransaction.setCompletionBlock {
+            //动画完成后移除此卡
+            cardView?.removeFromSuperview()
+        }
+        
+        cardView?.layer.add(translationAnimation, forKey: "translation")
+        cardView?.layer.add(rotationAnimation, forKey: "rotation")
+    }
+    
+    //左右滑动移除卡片，下一张卡赋值到最上卡
+    func didRemoveCard(cardView: YSCardView) {
+        self.topCardView?.removeFromSuperview()
+        self.topCardView = self.topCardView?.nextCardView
     }
     
     @objc fileprivate func handleSettings(){
@@ -107,6 +163,7 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
     fileprivate func fetchUsers_setupCards(){
         let refreshingHUD = showWaitingHUD(title: "刷新中", detail: "正在获取新用户", view: view)
         
+        topCardView = nil; //当重新从网络下载卡片，顶卡清空以便赋值给下一张新卡。
         fetchCurrentUser { (user) in
             self.currentUser = user
             fetchUsersFromFirestore(currentUser: user) { [weak self] (viewModels) in
