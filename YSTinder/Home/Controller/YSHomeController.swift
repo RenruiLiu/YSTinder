@@ -94,10 +94,12 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
     
     //点击不喜欢按钮
     @objc fileprivate func handleDislike(){
+        saveSwipeToFirestore(WithCardView: topCardView, like: false)
         animateRemoveCard(toLike: false)
     }
     //点击喜欢按钮
     @objc fileprivate func handleLike(){
+        saveSwipeToFirestore(WithCardView: topCardView, like: true)
         animateRemoveCard(toLike: true)
     }
     
@@ -130,9 +132,10 @@ class YSHomeController : UIViewController, SettingsControllerDelegate, LoginCont
     }
     
     //左右滑动移除卡片，下一张卡赋值到最上卡
-    func didRemoveCard(cardView: YSCardView) {
-        self.topCardView?.removeFromSuperview()
-        self.topCardView = self.topCardView?.nextCardView
+    func didRemoveCard(cardView: YSCardView,like: Bool) {
+        topCardView?.removeFromSuperview()
+        saveSwipeToFirestore(WithCardView: topCardView, like: like)
+        topCardView = topCardView?.nextCardView
     }
     
     @objc fileprivate func handleSettings(){

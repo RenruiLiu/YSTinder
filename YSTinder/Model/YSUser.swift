@@ -31,7 +31,7 @@ struct YSUser: ProducesCardViewModel {
         captionAttributedStr.append(NSAttributedString(string: "  \(age ?? 18)", attributes: [.font:UIFont.systemFont(ofSize: 24, weight: .regular)]))
         captionAttributedStr.append(NSAttributedString(string: "\n\(caption ?? "")", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .regular)]))
         
-        return YSCardViewModel(imageUrls: imageUrls ?? [], attributedString: attributedText, textAlignment: .left, captionStr: captionAttributedStr)
+        return YSCardViewModel(uid: self.uid ?? "", imageUrls: imageUrls ?? [], attributedString: attributedText, textAlignment: .left, captionStr: captionAttributedStr)
     }
     
     init(dictionary: [String:Any]) {

@@ -10,8 +10,8 @@ pod 'Firebase/Auth’
 pod 'Firebase/Storage’
 pod 'Firebase/Core’
 pod 'SDWebImage','~>4.4.2’
-pod 'JGProgressHUD','~>2.0.3'
-pod 'ReachabilitySwift'
+pod 'JGProgressHUD','~>2.0.3' #HUD
+pod 'ReachabilitySwift' #检查网络
   # Pods for YSTinder
 
 end

@@ -12,7 +12,7 @@ import SDWebImage
 
 protocol CardViewDelegate {
     func didTapMoreInfoBtn(cardViewModel: YSCardViewModel)
-    func didRemoveCard(cardView: YSCardView)
+    func didRemoveCard(cardView: YSCardView, like: Bool)
 }
 
 class YSCardView: UIView, YSSwipingPhotoControllerDelegate {
@@ -204,9 +204,9 @@ class YSCardView: UIView, YSSwipingPhotoControllerDelegate {
             self.transform = .identity
             
             if shouldLike {
-                self.delegate?.didRemoveCard(cardView: self)
+                self.delegate?.didRemoveCard(cardView: self, like: true)
             } else if shouldNope {
-                self.delegate?.didRemoveCard(cardView: self)
+                self.delegate?.didRemoveCard(cardView: self, like: false)
             }
         })
     }

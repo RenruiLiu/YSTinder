@@ -16,6 +16,7 @@ protocol ProducesCardViewModel {
 class YSCardViewModel {
     
     //MARK:- Properties
+    let uid: String
     let imageUrls: [String]
     let attributedString: NSAttributedString
     let textAlignment: NSTextAlignment
@@ -27,7 +28,8 @@ class YSCardViewModel {
         }
     }
     
-    init(imageUrls: [String], attributedString: NSAttributedString, textAlignment: NSTextAlignment, captionStr: NSAttributedString = NSAttributedString(string: "")) {
+    init(uid: String, imageUrls: [String], attributedString: NSAttributedString, textAlignment: NSTextAlignment, captionStr: NSAttributedString = NSAttributedString(string: "")) {
+        self.uid = uid
         self.imageUrls = imageUrls
         self.attributedString = attributedString
         self.textAlignment = textAlignment

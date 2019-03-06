@@ -237,3 +237,38 @@ func loginUser(WithEmail email: String, password: String, completion:@escaping (
         completion(err)
     }
 }
+
+func saveSwipeToFirestore(WithCardView cardView: YSCardView?, like:Bool){
+    guard let uid = Auth.auth().currentUser?.uid else {return}
+    guard let cardUid = cardView?.cardViewModel.uid else {return}
+    
+    let likeValue = like ? 1 : 0
+    let documentData = [cardUid : likeValue]
+    
+    //先检查是否已经存有swipes
+    Firestore.firestore().collection("swipes").document(uid).getDocument { (snapshot, err) in
+        if let err = err {
+            print("获取swipe失败原因：", err.localizedDescription)
+            return
+        }
+        
+        //如果存有，则update
+        if snapshot?.exists == true {
+            Firestore.firestore().collection("swipes").document(uid).updateData(documentData) { (err) in
+                if let err = err {
+                    print("保存swipe失败原因：", err.localizedDescription)
+                    return
+                }
+            }
+        } else {
+            //没存有，则setData
+            Firestore.firestore().collection("swipes").document(uid).setData(documentData) { (err) in
+                if let err = err {
+                    print("保存swipe失败原因：", err.localizedDescription)
+                    return
+                }
+            }
+        }
+    }
+    
+}

@@ -19,6 +19,6 @@ struct YSAdvertiser: ProducesCardViewModel {
         let attributedText = NSMutableAttributedString(string: title, attributes: [.font:UIFont.systemFont(ofSize: 32, weight: .heavy)])
         attributedText.append(NSAttributedString(string: "\n\(brandName)", attributes: [.font:UIFont.systemFont(ofSize: 24, weight: .bold)]))
         
-        return YSCardViewModel(imageUrls: [posterPhotoName], attributedString: attributedText, textAlignment: .center)
+        return YSCardViewModel(uid: "", imageUrls: [posterPhotoName], attributedString: attributedText, textAlignment: .center)
     }
 }
